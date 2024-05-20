@@ -1,0 +1,102 @@
+{% extends "layout.html" %} {% block content %}
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}" />
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center align-items-start">
+      <!-- Conversation List -->
+      <div class="col-md-4 card">
+        <div class="card-header msg_head">
+          <div class="d-flex bd-highlight">
+            <div class="chat-history w-100">
+              <h2 class="text-center">Chat History</h2>
+              <ul id="chatList" class="list-group">
+                {% for c in cnvs %}
+                <li class="list-group-item list-group-item-action conversations" data-cnvid="{{ c.id }}">
+                  <strong>{{ c.title }}</strong><br />
+                  <small>{{ c.date }}</small>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Area -->
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header msg_head">
+            <div class="d-flex bd-highlight">
+              <div class="user_info">
+                <h2 id="chatTitle">Select a chat to view</h2>
+              </div>
+            </div>
+          </div>
+          <div id="messageFormeight" class="card-body msg_card_body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const chatList = document.getElementById("chatList");
+    const chatTitle = document.getElementById("chatTitle");
+    const messageFormeight = document.getElementById("messageFormeight");
+
+    function formatDateTime(dateTimeString) {
+      const dateTime = new Date(dateTimeString);
+      const hour = dateTime.getHours().toString().padStart(2, "0"); // Get hours and pad with zero if necessary
+      const minute = dateTime.getMinutes().toString().padStart(2, "0"); // Get minutes and pad with zero if necessary
+      return `${hour}:${minute}`; // Return formatted time
+    }
+
+    function loadChat(chat) {
+      console.log(chat); // Log the received data to inspect its structure
+      chatTitle.textContent = chat.title; // Update the conversation title
+      messageFormeight.innerHTML = ""; // Clear previous messages
+
+      // Append messages to the chat UI
+      chat.forEach((message) => {
+        const messageDiv = document.createElement("div");
+        if (message.role === "user") {
+          messageDiv.classList.add("d-flex", "justify-content-end", "mb-4");
+          messageDiv.innerHTML = `
+                <div class="msg_cotainer_send">${message.content}<span class="msg_time_send">${formatDateTime(message.time)}</span></div>
+                <div class="img_cont_msg">
+                  <img src="/static/profile pics/{{current_user.img}}" class="rounded-circle user_img_msg">
+                </div>`;
+        } else {
+          messageDiv.classList.add("d-flex", "justify-content-start", "mb-4");
+          messageDiv.innerHTML = `
+                <div class="img_cont_msg">
+                  <img src="/static/chatbot icon.jpg" class="rounded-circle user_img_msg">
+                </div>
+                <div class="msg_cotainer">${message.content}<span class="msg_time">${formatDateTime(message.time)}</span></div>`;
+        }
+        messageFormeight.appendChild(messageDiv);
+        $("#messageFormeight").css("height", "auto");
+      });
+    }
+
+    $(".conversations").click(function () {
+      $.ajax({
+        type: "POST",
+        url: `/conversation/${$(this).attr("data-cnvid")}`,
+      }).done(function (data) {
+        let cnvs = JSON.parse(data);
+        console.log(cnvs);
+        loadChat(cnvs);
+      });
+    });
+
+    // Initially load the first chat if available
+    if (userChats.length > 0) {
+      loadChat(userChats[0]);
+    }
+  </script>
+</body>
+{% endblock content %}

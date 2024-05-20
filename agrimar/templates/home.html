@@ -1,0 +1,233 @@
+{% extends "layout.html" %} {% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css')}}" />
+    <style>
+      /* CSS styles for the blurred background overlay */
+      #blur-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+      }
+
+      /* CSS styles for the map interface window */
+      #map-window {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        z-index: 1000;
+        width: 30%; /* Adjust the width as needed */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      #map {
+        height: 300px;
+        margin: 0 auto; /* Center the map horizontally */
+      }
+
+      .blur-effect {
+        filter: blur(5px);
+        pointer-events: none;
+      }
+    </style>
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  </head>
+
+  <body>
+    <div id="blur-overlay"></div>
+    <div class="container">
+      <div class="row justify-content-center align-items-start">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header msg_head">
+              <div class="d-flex bd-highlight">
+                <div class="img_cont">
+                  <img src="\static\chatbot icon.jpg" class="rounded-circle user_img" />
+                  <span class="online_icon"></span>
+                </div>
+                <div class="user_info">
+                  <span>AgriMar</span>
+                  <p>Your Friendly Agriculture Assistant</p>
+                </div>
+              </div>
+            </div>
+            <div id="messageFormeight" class="card-body msg_card_body"></div>
+            <div class="card-footer">
+              <form id="messageArea" class="input-group">
+                <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required />
+                <div class="input-group-append">
+                  <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
+                </div>
+              </form>
+              <div class="user_info"><p>⚠️ Create FREE account to keep conversation history</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 card">
+          <button id="location-btn" class="map-btn">Choose Location</button>
+
+          <!-- Hidden map interface window -->
+          <div id="map-window">
+            <button type="button" class="close" aria-label="Close" id="close-map-window">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <form id="location-form" method="post" action="">
+              <div id="map"></div>
+              <label for="latitude" class="form-control-label">{{ form.lat.label }}</label>
+              <input type="text" id="latitude" name="latitude" class="form-control" />
+              <label for="longitude" class="form-control-label">{{ form.lon.label }}</label>
+              <input type="text" id="longitude" name="longitude" class="form-control" />
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+          <div class="d-flex bd-highlight">
+            <div class="user_info mt-3">
+              {% if session['lat'] and session['lon'] %}
+              <p><strong>Latitude:</strong> {{ session['lat'] }}</p>
+              <p><strong>Longitude:</strong> {{ session['lon'] }}</p>
+              <p><strong>City / Town / Village:</strong> {{ session['city'] }}</p>
+              <p><strong>Region / State:</strong> {{ session['region'] }}</p>
+              <p><strong>Country:</strong> {{ session['country'] }}</p>
+              {% else %}
+              <p >⚠️ Insert location for precised information and to enable weather forcast</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Include Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+      document.getElementById("close-map-window").addEventListener("click", function () {
+        document.getElementById("blur-overlay").style.display = "none";
+        document.querySelector(".container").classList.remove("blur-effect");
+        document.getElementById("map-window").style.display = "none";
+      });
+    </script>
+    <script>
+      var map;
+      var marker;
+
+      function initMap() {
+        map = L.map("map").setView([32.377665, -6.319866], 8);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        map.on("click", function (event) {
+          if (marker) {
+            map.removeLayer(marker);
+          }
+          marker = L.marker(event.latlng, {
+            draggable: true,
+          }).addTo(map);
+          document.getElementById("latitude").value = event.latlng.lat;
+          document.getElementById("longitude").value = event.latlng.lng;
+
+          marker.on("dragend", function (event) {
+            var markerLatLng = marker.getLatLng();
+            document.getElementById("latitude").value = markerLatLng.lat;
+            document.getElementById("longitude").value = markerLatLng.lng;
+          });
+        });
+
+        document.getElementById("latitude").addEventListener("input", updateMap);
+        document.getElementById("longitude").addEventListener("input", updateMap);
+      }
+
+      function updateMap() {
+        var latitude = parseFloat(document.getElementById("latitude").value);
+        var longitude = parseFloat(document.getElementById("longitude").value);
+
+        if (!isNaN(latitude) && !isNaN(longitude)) {
+          if (marker) {
+            map.removeLayer(marker);
+          }
+          marker = L.marker([latitude, longitude], {
+            draggable: true,
+          }).addTo(map);
+          map.setView([latitude, longitude], 15);
+          marker.on("dragend", function (event) {
+            var markerLatLng = marker.getLatLng();
+            document.getElementById("latitude").value = markerLatLng.lat;
+            document.getElementById("longitude").value = markerLatLng.lng;
+          });
+        }
+      }
+
+      document.getElementById("location-btn").addEventListener("click", function () {
+        document.getElementById("map-window").style.display = "block";
+        document.getElementById("blur-overlay").style.display = "block";
+        document.querySelector(".container").classList.add("blur-effect");
+        initMap();
+      });
+
+      document.getElementById("location-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
+
+        if (latitude && longitude) {
+          document.getElementById("blur-overlay").style.display = "none";
+          document.querySelector(".container").classList.remove("blur-effect");
+          document.getElementById("map-window").style.display = "none";
+          this.submit();
+        } else {
+          console.error("Latitude and longitude are required.");
+        }
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $("#messageArea").on("submit", function (event) {
+          event.preventDefault();
+
+          const date = new Date();
+          const str_time = date.getHours() + ":" + date.getMinutes();
+          const rawText = $("#text").val();
+
+          const userHtml = `<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${str_time}</span></div><div class="img_cont_msg"><img src="{{ img_file }}" class="rounded-circle user_img_msg"></div></div>`;
+          $("#text").val("");
+          $("#messageFormeight").append(userHtml);
+
+          $.ajax({
+            data: {
+              msg: rawText,
+            },
+            type: "POST",
+            url: "/get",
+          }).done(function (data) {
+            var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="/static/chatbot icon.jpg" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + "</span></div></div>";
+            $("#messageFormeight").append($.parseHTML(botHtml));
+            $("#messageFormeight").css("height", "auto");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
+{% endblock content %}
