@@ -7,8 +7,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '092b93416967f9fec0c22c76420ed834'
 app.app_context()
 host="localhost"
-user="root"
-password="mehdi1301"
+user="phpmyadmin"
+password="12345678"
 database="agrimar"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://'+user+':'+password+'@ '+ host +'/'+database
 db = SQLAlchemy(app)
