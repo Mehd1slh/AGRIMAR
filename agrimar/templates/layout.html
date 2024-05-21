@@ -24,7 +24,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
-            <a class="nav-item nav-link" href="/">
+            <a class="nav-item nav-link" href="/home">
               <img src="\static\AGRIMAR.png" alt="Your Logo" height="45" />
             </a>
             <div class="navbar-nav mr-auto">
@@ -33,7 +33,9 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              {% if current_user.is_authenticated %}
+              {% if current_user.is_authenticated %} {% if current_user.privilege == 'admin'%}
+              <a class="nav-item nav-link" href="{{ url_for('users') }}">Users</a>
+              {% endif %}
               <a class="nav-item nav-link" href="{{ url_for('chat_history') }}">Chat History</a>
               <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
               <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>

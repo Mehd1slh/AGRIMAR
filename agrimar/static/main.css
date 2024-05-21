@@ -301,9 +301,18 @@ h6 {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 16px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-
-.list-group-item-action:hover, .list-group-item-action:focus {
+.list-group-item-action:hover,
+.list-group-item-action:focus {
   color: #495057;
   text-decoration: none;
   background-color: #f8f9fa;
 }
+
+.tbody {
+  color: #d3d2d2;
+}
+
+.table-responsive {
+  border-radius: 15px;
+}
+

@@ -18,7 +18,7 @@ class Message(db.Model):
     convo_id: int
     id = db.Column(db.Integer , primary_key=True)
     content = db.Column(db.Text , nullable = False)
-    role = db.Column(db.String(20) , nullable = False , default = 'user') 
+    role = db.Column(db.String(20) , nullable = False , default = 'user')
     time = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc)+ timedelta(hours=1))
     convo_id = db.Column(db.Integer, db.ForeignKey('conversation.id'), nullable=False)
     def __repr__(self):

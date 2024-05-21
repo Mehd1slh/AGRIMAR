@@ -1,5 +1,4 @@
 from datetime import datetime
-import json
 from flask import  render_template , redirect , url_for , flash , request , session 
 from agrimar.chat import CustomChatBot , generate_title , get_address_info_from_coords
 from agrimar.forms import RegistartionForm, LoginForm , MapForm , UpdateAccountForm , RequestResetForm , ResetPasswordForm
@@ -7,12 +6,11 @@ from agrimar.model import User , Conversation , Message
 from agrimar import app , db , bcrypt 
 from flask_login import login_user , logout_user , login_required , current_user
 from PIL import Image
-import secrets 
-import os , smtplib
+import secrets , json , os , smtplib
 
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
     session.pop('lat', None)
@@ -74,6 +72,31 @@ def chat():
 def about():
     return render_template('about.html', title='About')
 
+@app.route("/users")
+@login_required
+def users():
+    if current_user.is_authenticated:
+        if current_user.privilege == 'admin':
+            users = User.query.filter_by(privilege = "user").all()
+            return render_template('users.html' , title ='Users' , users = users)
+        else:
+            flash("You Don't have the admin privilege ", 'warning')
+            return redirect(url_for('home'))
+        
+@app.route('/delete_user', methods=['POST'])
+@login_required
+def delete_user():
+    user_id = request.form.get('user_id')
+    user = User.query.get(user_id)
+    
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        flash('User has been deleted successfully', 'success')
+    else:
+        flash('User not found', 'danger')
+    
+    return redirect(url_for('users'))
 
 @app.route("/chat_history")
 @login_required
@@ -129,6 +152,12 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
+    session.pop('lat', None)
+    session.pop('lon', None)
+    session.pop('full_address', None)
+    session.pop('city', None)
+    session.pop('region', None)
+    session.pop('country', None)
     return redirect(url_for('home'))
 
 

@@ -1,4 +1,4 @@
-from agrimar.model import User , Conversation , Message
+from agrimar.model import  Conversation , Message
 from openai import OpenAI 
 import requests as r
 from opencage.geocoder import OpenCageGeocode
