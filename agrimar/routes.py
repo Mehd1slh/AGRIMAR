@@ -77,7 +77,7 @@ def about():
 def users():
     if current_user.is_authenticated:
         if current_user.privilege == 'admin':
-            users = User.query.filter_by(privilege = "form.email.data").all()
+            users = User.query.filter_by(privilege = "user").all()
             return render_template('users.html' , title ='Users' , users = users)
         else:
             flash("You Don't have the admin privilege ", 'warning')
