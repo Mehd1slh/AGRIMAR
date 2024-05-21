@@ -66,3 +66,7 @@ class ResetPasswordForm(FlaskForm):
     con_mdp = PasswordField('Confirm Password' , validators=[DataRequired() , Length(min=6 , max=15) , EqualTo('mdp')])
     submit = SubmitField('Reset Password')
 
+
+
+
+#git comment
