@@ -1,16 +1,14 @@
-from flask import Flask
+from flask import Flask, session, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-
+from flask_babel import Babel
+import os
 app = Flask(__name__)
+babel = Babel(app)
+# app.config.from_object('config.Config')
 app.config['SECRET_KEY'] = '092b93416967f9fec0c22c76420ed834'
-app.app_context()
-host="localhost"
-user="phpmyadmin"
-password="12345678"
-database="agrimar"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://'+user+':'+password+'@ '+ host +'/'+database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://phpmyadmin:12345678@localhost/agrimar'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)

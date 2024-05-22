@@ -5,8 +5,18 @@ html {
 }
 body {
   background: rgb(44, 47, 59);
-  background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43));
-  background: linear-gradient(to right, rgb(49, 165, 253), rgb(50, 55, 65), rgb(33, 33, 78));
+  background: -webkit-linear-gradient(
+    to right,
+    rgb(40, 59, 34),
+    rgb(54, 60, 70),
+    rgb(32, 32, 43)
+  );
+  background: linear-gradient(
+    to right,
+    rgb(49, 165, 253),
+    rgb(50, 55, 65),
+    rgb(33, 33, 78)
+  );
   margin-top: 5rem;
   font-family: "Poppins", sans-serif;
 }
@@ -595,3 +605,25 @@ ul.Links_footer li {
   box-shadow: inherit;
 }
 /* end footer */
+
+/*translation website */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f3f4f6;
+  padding: 10px;
+}
+
+#page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.max-w-500 {
+  max-width: 500px;
+}
+
+.bg-accent-color {
+  background-color: #3b82f6 !important;
+  color: white;
+}
+/*End translation*/

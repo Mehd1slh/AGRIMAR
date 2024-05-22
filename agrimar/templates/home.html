@@ -1,5 +1,5 @@
 {% extends "layout.html" %} {% block content %}
-<html>
+<html lang="{{ current_locale }}">
   <head>
     <style>
       /* CSS styles for the blurred background overlay */
@@ -57,11 +57,26 @@
       }
 
       // Load multiple Lottie animations
-      var aboutAnimation = loadLottieAnimation("about-animation", "static/Animation-About.json");
-      var otherAnimation = loadLottieAnimation("weather-animation", "static/Animation-Weather.json");
-      var otherAnimation = loadLottieAnimation("soil-animation", "static/Animation-Soil.json");
-      var otherAnimation = loadLottieAnimation("ndvi-animation", "static/Animation-NDVI.json");
-      var otherAnimation = loadLottieAnimation("location-animation", "static/Animation-Location.json");
+      var aboutAnimation = loadLottieAnimation(
+        "about-animation",
+        "static/Animation-About.json"
+      );
+      var otherAnimation = loadLottieAnimation(
+        "weather-animation",
+        "static/Animation-Weather.json"
+      );
+      var otherAnimation = loadLottieAnimation(
+        "soil-animation",
+        "static/Animation-Soil.json"
+      );
+      var otherAnimation = loadLottieAnimation(
+        "ndvi-animation",
+        "static/Animation-NDVI.json"
+      );
+      var otherAnimation = loadLottieAnimation(
+        "location-animation",
+        "static/Animation-Location.json"
+      );
       // Add more animations as needed
       // Add more animations as needed
     });
@@ -77,7 +92,10 @@
             <div class="card-header msg_head">
               <div class="d-flex bd-highlight">
                 <div class="img_cont">
-                  <img src="\static\chatbot icon.png" class="rounded-circle user_img" />
+                  <img
+                    src="\static\chatbot icon.png"
+                    class="rounded-circle user_img"
+                  />
                   <span class="online_icon"></span>
                 </div>
                 <div class="user_info">
@@ -89,12 +107,28 @@
             <div id="messageFormeight" class="card-body msg_card_body"></div>
             <div class="card-footer">
               <form id="messageArea" class="input-group">
-                <input type="text" id="text" name="msg" placeholder="Type your message..." autocomplete="off" class="form-control type_msg" required />
+                <input
+                  type="text"
+                  id="text"
+                  name="msg"
+                  placeholder="Type your message..."
+                  autocomplete="off"
+                  class="form-control type_msg"
+                  required
+                />
                 <div class="input-group-append">
-                  <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
+                  <button
+                    type="submit"
+                    id="send"
+                    class="input-group-text send_btn"
+                  >
+                    <i class="fas fa-location-arrow"></i>
+                  </button>
                 </div>
               </form>
-              <div class="user_info"><p>⚠️ Create FREE account to keep conversation history</p></div>
+              <div class="user_info">
+                <p>⚠️ Create FREE account to keep conversation history</p>
+              </div>
             </div>
           </div>
         </div>
@@ -106,15 +140,34 @@
 
           <!-- Hidden map interface window -->
           <div id="map-window">
-            <button type="button" class="close" aria-label="Close" id="close-map-window">
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              id="close-map-window"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
             <form id="location-form" method="post" action="">
               <div id="map"></div>
-              <label for="latitude" class="form-control-label">{{ form.lat.label }}</label>
-              <input type="text" id="latitude" name="latitude" class="form-control" />
-              <label for="longitude" class="form-control-label">{{ form.lon.label }}</label>
-              <input type="text" id="longitude" name="longitude" class="form-control" />
+              <label for="latitude" class="form-control-label"
+                >{{ form.lat.label }}</label
+              >
+              <input
+                type="text"
+                id="latitude"
+                name="latitude"
+                class="form-control"
+              />
+              <label for="longitude" class="form-control-label"
+                >{{ form.lon.label }}</label
+              >
+              <input
+                type="text"
+                id="longitude"
+                name="longitude"
+                class="form-control"
+              />
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
@@ -123,14 +176,19 @@
               {% if session['lat'] and session['lon'] %}
               <p><strong>Latitude:</strong> {{ session['lat'] }}</p>
               <p><strong>Longitude:</strong> {{ session['lon'] }}</p>
-              <p><strong>City / Town / Village:</strong> {{ session['city'] }}</p>
+              <p>
+                <strong>City / Town / Village:</strong> {{ session['city'] }}
+              </p>
               <p><strong>Region / State:</strong> {{ session['region'] }}</p>
               <p><strong>Country:</strong> {{ session['country'] }}</p>
               {% else %}
               <div class="about_img">
                 <figure><div id="location-animation"></div></figure>
               </div>
-              <p>⚠️ Insert location for precised AI response (Soil properties + Weather forecast)</p>
+              <p>
+                ⚠️ Insert location for precised AI response (Soil properties +
+                Weather forecast)
+              </p>
               {% endif %}
             </div>
           </div>
@@ -138,11 +196,15 @@
         <!-- Include Leaflet JavaScript -->
         <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
         <script>
-          document.getElementById("close-map-window").addEventListener("click", function () {
-            document.getElementById("blur-overlay").style.display = "none";
-            document.querySelector(".container").classList.remove("blur-effect");
-            document.getElementById("map-window").style.display = "none";
-          });
+          document
+            .getElementById("close-map-window")
+            .addEventListener("click", function () {
+              document.getElementById("blur-overlay").style.display = "none";
+              document
+                .querySelector(".container")
+                .classList.remove("blur-effect");
+              document.getElementById("map-window").style.display = "none";
+            });
         </script>
         <script>
           var map;
@@ -152,7 +214,8 @@
             map = L.map("map").setView([32.377665, -6.319866], 8);
 
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-              attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             }).addTo(map);
 
             map.on("click", function (event) {
@@ -172,13 +235,21 @@
               });
             });
 
-            document.getElementById("latitude").addEventListener("input", updateMap);
-            document.getElementById("longitude").addEventListener("input", updateMap);
+            document
+              .getElementById("latitude")
+              .addEventListener("input", updateMap);
+            document
+              .getElementById("longitude")
+              .addEventListener("input", updateMap);
           }
 
           function updateMap() {
-            var latitude = parseFloat(document.getElementById("latitude").value);
-            var longitude = parseFloat(document.getElementById("longitude").value);
+            var latitude = parseFloat(
+              document.getElementById("latitude").value
+            );
+            var longitude = parseFloat(
+              document.getElementById("longitude").value
+            );
 
             if (!isNaN(latitude) && !isNaN(longitude)) {
               if (marker) {
@@ -196,27 +267,33 @@
             }
           }
 
-          document.getElementById("location-btn").addEventListener("click", function () {
-            document.getElementById("map-window").style.display = "block";
-            document.getElementById("blur-overlay").style.display = "block";
-            document.querySelector(".container").classList.add("blur-effect");
-            initMap();
-          });
+          document
+            .getElementById("location-btn")
+            .addEventListener("click", function () {
+              document.getElementById("map-window").style.display = "block";
+              document.getElementById("blur-overlay").style.display = "block";
+              document.querySelector(".container").classList.add("blur-effect");
+              initMap();
+            });
 
-          document.getElementById("location-form").addEventListener("submit", function (event) {
-            event.preventDefault();
-            var latitude = document.getElementById("latitude").value;
-            var longitude = document.getElementById("longitude").value;
+          document
+            .getElementById("location-form")
+            .addEventListener("submit", function (event) {
+              event.preventDefault();
+              var latitude = document.getElementById("latitude").value;
+              var longitude = document.getElementById("longitude").value;
 
-            if (latitude && longitude) {
-              document.getElementById("blur-overlay").style.display = "none";
-              document.querySelector(".container").classList.remove("blur-effect");
-              document.getElementById("map-window").style.display = "none";
-              this.submit();
-            } else {
-              console.error("Latitude and longitude are required.");
-            }
-          });
+              if (latitude && longitude) {
+                document.getElementById("blur-overlay").style.display = "none";
+                document
+                  .querySelector(".container")
+                  .classList.remove("blur-effect");
+                document.getElementById("map-window").style.display = "none";
+                this.submit();
+              } else {
+                console.error("Latitude and longitude are required.");
+              }
+            });
         </script>
 
         <script>
@@ -239,7 +316,12 @@
                 type: "POST",
                 url: "/get",
               }).done(function (data) {
-                var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="/static/chatbot icon.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + "</span></div></div>";
+                var botHtml =
+                  '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="/static/chatbot icon.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' +
+                  data +
+                  '<span class="msg_time">' +
+                  str_time +
+                  "</span></div></div>";
                 $("#messageFormeight").append($.parseHTML(botHtml));
                 $("#messageFormeight").css("height", "auto");
               });
@@ -255,10 +337,21 @@
         <div class="row">
           <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
             <div class="about_box">
-              <h2>About AGRIMAR<br /><strong class="black"> Farm and company</strong></h2>
+              <h2>
+                About AGRIMAR<br /><strong class="black">
+                  Farm and company</strong
+                >
+              </h2>
               <p>
-                Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is designed to provide farmers and agriculture enthusiasts with vital information tailored to their specific locations. Whether you need up-to-date weather forecasts, detailed soil data, or other agricultural
-                insights, AgriMar has got you covered. Our service is free, simple to use, and accessible to everyone. Get the information you need to make informed decisions and optimize your farming practices with ease.
+                Welcome to AgriMar, your friendly agriculture assistant. Our
+                chatbot is designed to provide farmers and agriculture
+                enthusiasts with vital information tailored to their specific
+                locations. Whether you need up-to-date weather forecasts,
+                detailed soil data, or other agricultural insights, AgriMar has
+                got you covered. Our service is free, simple to use, and
+                accessible to everyone. Get the information you need to make
+                informed decisions and optimize your farming practices with
+                ease.
               </p>
               <a href="#">Read More</a>
             </div>
@@ -291,22 +384,38 @@
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
               <div class="offer_box">
                 <h3>Weather data</h3>
-                <figure><div id="weather-animation" class="lottie-container"></div></figure>
-                <p>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                <figure>
+                  <div id="weather-animation" class="lottie-container"></div>
+                </figure>
+                <p>
+                  consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                  ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation
+                </p>
               </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin_ttt">
               <div class="offer_box">
                 <h3>Soil data</h3>
-                <figure><div id="soil-animation" class="lottie-container"></div></figure>
-                <p>consectetur adipiscing elit, sed do eiusmodmpor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                <figure>
+                  <div id="soil-animation" class="lottie-container"></div>
+                </figure>
+                <p>
+                  consectetur adipiscing elit, sed do eiusmodmpor incididunt ut
+                  labore et dolore magna aliqua. Ut enim ad
+                </p>
               </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk">
               <div class="offer_box">
                 <h3>NDVI indicator</h3>
-                <figure><div id="ndvi-animation" class="lottie-container"></div></figure>
-                <p>consectetur adipiscing elit, sed do eiusmodmpor incididunt ut labore et dolore magna</p>
+                <figure>
+                  <div id="ndvi-animation" class="lottie-container"></div>
+                </figure>
+                <p>
+                  consectetur adipiscing elit, sed do eiusmodmpor incididunt ut
+                  labore et dolore magna
+                </p>
               </div>
             </div>
 
@@ -330,20 +439,43 @@
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
               <div class="address">
                 <a href="home.html">
-                  <img src="static/AGRIMAR 2.png" alt="logo" class="footer-logo" />
+                  <img
+                    src="static/AGRIMAR 2.png"
+                    alt="logo"
+                    class="footer-logo"
+                  />
                 </a>
-                <p>dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et sdolor sit amet, consectetur adipiscing elit,</p>
+                <p>
+                  dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                  tempor incididunt ut labore et sdolor sit amet, consectetur
+                  adipiscing elit,
+                </p>
               </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
               <div class="address">
                 <h3>Quick links</h3>
                 <ul class="Links_footer">
-                  <li><img src="static/3.png" /> <a href="{{ url_for('register') }}"> Join Us</a></li>
-                  <li><img src="static/3.png" alt="#" /> <a href="#">Maintenance</a></li>
-                  <li><img src="static/3.png" alt="#" /> <a href="#">Language Packs</a></li>
-                  <li><img src="static/3.png" alt="#" /> <a href="#">LearnPress</a></li>
-                  <li><img src="static/3.png" alt="#" /> <a href="#">Release Status</a></li>
+                  <li>
+                    <img src="static/3.png" />
+                    <a href="{{ url_for('register') }}"> Join Us</a>
+                  </li>
+                  <li>
+                    <img src="static/3.png" alt="#" />
+                    <a href="#">Maintenance</a>
+                  </li>
+                  <li>
+                    <img src="static/3.png" alt="#" />
+                    <a href="#">Language Packs</a>
+                  </li>
+                  <li>
+                    <img src="static/3.png" alt="#" />
+                    <a href="#">LearnPress</a>
+                  </li>
+                  <li>
+                    <img src="static/3.png" alt="#" />
+                    <a href="#">Release Status</a>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -351,8 +483,16 @@
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
               <div class="address">
                 <h3>Subcribe email</h3>
-                <p>Enter your email below to get the latest updates , join our AGRIMAR community !</p>
-                <input class="form-control" placeholder="Your Email" type="type" name="Your Email" />
+                <p>
+                  Enter your email below to get the latest updates , join our
+                  AGRIMAR community !
+                </p>
+                <input
+                  class="form-control"
+                  placeholder="Your Email"
+                  type="type"
+                  name="Your Email"
+                />
                 <button class="submit-btn">Submit</button>
               </div>
             </div>
@@ -363,13 +503,16 @@
 
                 <ul class="loca">
                   <li>
-                    <a href="#"><img src="static/loc1.png" alt="#" /></a>Campus Mghilla, BP 523 , 23000 Béni Mellal
+                    <a href="#"><img src="static/loc1.png" alt="#" /></a>Campus
+                    Mghilla, BP 523 , 23000 Béni Mellal
                   </li>
                   <li>
-                    <a href="#"><img src="static/email1.png" alt="#" /></a>fstbm.agrimar@gmail.com
+                    <a href="#"><img src="static/email1.png" alt="#" /></a
+                    >fstbm.agrimar@gmail.com
                   </li>
                   <li>
-                    <a href="#"><img src="static/call1.png" alt="#" /></a>+12586954775
+                    <a href="#"><img src="static/call1.png" alt="#" /></a
+                    >+12586954775
                   </li>
                 </ul>
               </div>

@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{current_locale}}">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <!-- Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -31,22 +28,35 @@
               <img src="\static\AGRIMAR.png" alt="Your Logo" height="45" />
             </a>
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#about">About</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#discover">Discover</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#contact_us">Contact Us</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}">{{ _('Home') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#about">{{ _('About') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#discover">{{ _('Discover') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#contact_us">{{ _('Contact Us') }}</a>
             </div>
-            <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %} {% if current_user.privilege == 'admin'%}
-              <a class="nav-item nav-link" href="{{ url_for('users') }}">Users</a>
+              <a class="nav-item nav-link" href="{{ url_for('users') }}">{{_('Users')}}</a>
               {% endif %}
-              <a class="nav-item nav-link" href="{{ url_for('chat_history') }}">Chat History</a>
-              <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+              <a class="nav-item nav-link" href="{{ url_for('chat_history') }}">{{ _('Chat History') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('account') }}">{{_('Account')}}</a>
+              <a class="nav-item nav-link" href="{{ url_for('logout') }}">{{('Logout')}}</a>
+              <div class="relative inline-flex w-32">
+                <select onchange="location = '/setlang?lang=' + this.value;" class="rounded border appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
+                  <option value="en" {{ 'selected' if get_locale() == 'en' else '' }}>English</option>
+                  <option value="fr" {{ 'selected' if get_locale() == 'fr' else '' }}>Français</option>
+                  <option value="ar" {{ 'selected' if get_locale() == 'ar' else '' }}>عربى</option>
+                </select>
+              </div>
               {% else %}
-              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+              <a class="nav-item nav-link" href="{{ url_for('login') }}">{{_('Login')}}</a>
+              <a class="nav-item nav-link" href="{{ url_for('register') }}">{{_('Register')}}</a>
+              <div class="relative inline-flex w-32">
+                <select onchange="location = '/setlang?lang=' + this.value;" class="rounded border appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
+                  <option value="en" {{ 'selected' if get_locale() == 'en' else '' }}>English</option>
+                  <option value="fr" {{ 'selected' if get_locale() == 'fr' else '' }}>Français</option>
+                  <option value="ar" {{ 'selected' if get_locale() == 'ar' else '' }}>عربى</option>
+                </select>
+              </div>
               {% endif %}
             </div>
           </div>
@@ -57,8 +67,6 @@
     <main role="main" class="container">
       <div class="row justify-content-center">
         <div class="col-md-12 h-100">
-          <!-- flashs are one time alerts-->
-
           <div class="col-md-10">
             {% with messages = get_flashed_messages(with_categories =true) %} {% if messages %} {% for category , message in messages%}
             <div class="alert alert-{{ category }}">{{ message }}</div>
