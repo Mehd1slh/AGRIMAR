@@ -1,4 +1,4 @@
-# English translations for PROJECT.
+# French translations for PROJECT.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
@@ -7,34 +7,69 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-22 11:41+0100\n"
-"PO-Revision-Date: 2024-05-22 11:41+0100\n"
+"POT-Creation-Date: 2024-05-22 19:02+0100\n"
+"PO-Revision-Date: 2024-05-22 19:04+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: en\n"
-"Language-Team: en <LL@li.org>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: templates/layout.html:34
+#: agrimar/routes.py:337
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: agrimar/routes.py:338 agrimar/templates/layout.html:41
+msgid "Account"
+msgstr "Compte"
+
+#: agrimar/routes.py:339
+msgid "Success!"
+msgstr "Succès !"
+
+#: agrimar/routes.py:340
+msgid "You are registered."
+msgstr "Vous êtes inscrit."
+
+#: agrimar/routes.py:341
+msgid "Please enter a valid email address."
+msgstr "Veuillez entrer une adresse e-mail valide."
+
+#: agrimar/templates/home.html:131
+msgid "⚠️ Create FREE account to keep conversation history"
+msgstr "⚠️ Créez un compte GRATUIT pour conserver l'historique des conversations"
+
+#: agrimar/templates/layout.html:31
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
-#: templates/layout.html:35
+#: agrimar/templates/layout.html:32
 msgid "About"
-msgstr ""
+msgstr "À propos"
 
-#: templates/layout.html:36
+#: agrimar/templates/layout.html:33
 msgid "Discover"
-msgstr ""
+msgstr "Découvrir"
 
-#: templates/layout.html:37
+#: agrimar/templates/layout.html:34
 msgid "Contact Us"
-msgstr ""
+msgstr "Nous contacter"
 
-#: templates/layout.html:44
+#: agrimar/templates/layout.html:38
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: agrimar/templates/layout.html:40
 msgid "Chat History"
-msgstr ""
+msgstr "Historique de chat"
 
+#: agrimar/templates/layout.html:51
+msgid "Login"
+msgstr "Connexion"
+
+#: agrimar/templates/layout.html:52
+msgid "Register"
+msgstr "S'inscrire"

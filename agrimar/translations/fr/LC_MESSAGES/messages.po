@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-22 11:41+0100\n"
-"PO-Revision-Date: 2024-05-22 11:41+0100\n"
+"POT-Creation-Date: 2024-05-22 19:10+0100\n"
+"PO-Revision-Date: 2024-05-22 19:11+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -18,23 +18,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
-#: templates/layout.html:34
+#: routes.py:337
+msgid "Logout"
+msgstr ""
+
+#: routes.py:338 templates/layout.html:41
+msgid "Account"
+msgstr ""
+
+#: routes.py:339
+msgid "Success!"
+msgstr ""
+
+#: routes.py:340
+msgid "You are registered."
+msgstr ""
+
+#: routes.py:341
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: templates/home.html:131
+msgid "⚠️ Create FREE account to keep conversation history"
+msgstr ""
+
+#: templates/layout.html:14
+msgid "title"
+msgstr ""
+
+#: templates/layout.html:31
 msgid "Home"
 msgstr ""
 
-#: templates/layout.html:35
+#: templates/layout.html:32
 msgid "About"
 msgstr ""
 
-#: templates/layout.html:36
+#: templates/layout.html:33
 msgid "Discover"
 msgstr ""
 
-#: templates/layout.html:37
+#: templates/layout.html:34
 msgid "Contact Us"
 msgstr ""
 
-#: templates/layout.html:44
+#: templates/layout.html:38
+msgid "Users"
+msgstr ""
+
+#: templates/layout.html:40
 msgid "Chat History"
+msgstr ""
+
+#: templates/layout.html:51
+msgid "Login"
+msgstr ""
+
+#: templates/layout.html:52
+msgid "Register"
 msgstr ""
 

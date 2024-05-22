@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
     <link rel="icon" type="image/png" href="\static\AM logo.png" />
     {% if title %}
-    <title>AGRIMAR - {{ title }}</title>
+    <title>AGRIMAR - {{_('title') }}</title>
     {% else %}
     <title>AGRIMAR</title>
     {% endif %}
@@ -41,23 +41,22 @@
               <a class="nav-item nav-link" href="{{ url_for('account') }}">{{_('Account')}}</a>
               <a class="nav-item nav-link" href="{{ url_for('logout') }}">{{('Logout')}}</a>
               <div class="relative inline-flex w-32">
-                <select onchange="location.href = '{{ url_for('set_language') }}?lang=' + this.value;" class="rounded border appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
-                    <option value="en" {% if get_locale() == 'en' %} selected {% endif %}>English</option>
-                    <option value="fr" {% if get_locale() == 'fr' %} selected {% endif %}>Français</option>
-                    <option value="ar" {% if get_locale() == 'ar' %} selected {% endif %}>عربى</option>
-                </select>
-            </div>    
+                <select onchange="location = '/setlang?lang=' + this.value;">
+                  <option value="en" {{ 'selected' if get_locale() == 'en' else '' }}>English</option>
+                  <option value="fr" {{ 'selected' if get_locale() == 'fr' else '' }}>Français</option>
+                  <option value="ar" {{ 'selected' if get_locale() == 'ar' else '' }}>عربى</option>
+              </select>
+              </div>
               {% else %}
               <a class="nav-item nav-link" href="{{ url_for('login') }}">{{_('Login')}}</a>
               <a class="nav-item nav-link" href="{{ url_for('register') }}">{{_('Register')}}</a>
               <div class="relative inline-flex w-32">
-                <select onchange="location.href = '{{ url_for('set_language') }}?lang=' + this.value;" class="rounded border appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
-                    <option value="en" {% if get_locale() == 'en' %} selected {% endif %}>English</option>
-                    <option value="fr" {% if get_locale() == 'fr' %} selected {% endif %}>Français</option>
-                    <option value="ar" {% if get_locale() == 'ar' %} selected {% endif %}>عربى</option>
-                </select>
-            </div>
-            
+                <select onchange="location = '/setlang?lang=' + this.value;">
+                  <option value="en" {{ 'selected' if get_locale() == 'en' else '' }}>English</option>
+                  <option value="fr" {{ 'selected' if get_locale() == 'fr' else '' }}>Français</option>
+                  <option value="ar" {{ 'selected' if get_locale() == 'ar' else '' }}>عربى</option>
+              </select>
+              </div>
               {% endif %}
             </div>
           </div>

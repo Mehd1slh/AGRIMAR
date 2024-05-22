@@ -11,12 +11,13 @@ import json
 import os
 import smtplib
 from flask_babel import Babel
-from flask_babel import lazy_gettext as _l, gettext
+from flask_babel import _, get_locale, lazy_gettext, gettext
 
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
+    print(f"Current locale: {get_locale()}")
     session.pop('lat', None)
     session.pop('lon', None)
     session.pop('full_address', None)
@@ -311,7 +312,7 @@ def set_language():
     lang = request.args.get('lang')
     if lang:
         session['lang'] = lang
-    return redirect(request.referrer)
+    return redirect(request.referrer or url_for('home'))
 
 
 
@@ -340,6 +341,4 @@ def js_translations():
         'validEmail': gettext('Please enter a valid email address.')
     }
     return jsonify(translations)
-
-babel = Babel(app, locale_selector=get_locale)
 
