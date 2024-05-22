@@ -65,13 +65,6 @@ def chat():
         return ai_output
 
 
-    
-
-
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
-
 @app.route("/users")
 @login_required
 def users():
