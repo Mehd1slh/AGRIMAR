@@ -310,9 +310,9 @@ babel = Babel(app)
 def set_language():
     lang = request.args.get('lang')
     if lang:
-        app.config['BABEL_DEFAULT_LOCALE'] = lang
-        return redirect(request.referrer)
-    return redirect(url_for('home'))
+        session['lang'] = lang
+    return redirect(request.referrer)
+
 
 
 @app.context_processor
@@ -321,6 +321,7 @@ def inject_babel():
 
 def get_locale():
     if 'lang' in session:
+        print(session['lang'])
         return session['lang']
     return request.accept_languages.best_match(['en', 'fr'])
 
@@ -339,12 +340,6 @@ def js_translations():
         'validEmail': gettext('Please enter a valid email address.')
     }
     return jsonify(translations)
-
-
-def get_locale():
-    if 'lang' in session:
-        return session['lang']
-    return request.accept_languages.best_match(['en', 'fr'])
 
 babel = Babel(app, locale_selector=get_locale)
 

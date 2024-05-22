@@ -8,6 +8,8 @@ app = Flask(__name__)
 babel = Babel(app)
 # app.config.from_object('config.Config')
 app.config['SECRET_KEY'] = '092b93416967f9fec0c22c76420ed834'
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://phpmyadmin:12345678@localhost/agrimar'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
