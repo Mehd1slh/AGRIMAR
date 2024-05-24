@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ current_locale }}">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -12,42 +12,50 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
-    <link rel="icon" type="image/png" href="\static\AM logo.png" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='AM logo.png') }}" />
     {% if title %}
-    <title>AGRIMAR - {{ title }}</title>
+    <title>{{ _('AGRIMAR -') }} {{ title }}</title>
     {% else %}
-    <title>AGRIMAR</title>
+    <title>{{ _('AGRIMAR') }}</title>
     {% endif %}
   </head>
   <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="{{ _('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <a class="nav-item nav-link" href="/home">
-              <img src="\static\AGRIMAR.png" alt="Your Logo" height="45" />
+              <img src="{{ url_for('static', filename='AGRIMAR.png') }}" alt="{{ _('Your Logo') }}" height="45" />
             </a>
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#about">About</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#discover">More</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#contact_us">Contact Us</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#">{{ _('Home') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#about">{{ _('About') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#discover">{{ _('More') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#contact_us">{{ _('Contact Us') }}</a>
             </div>
+            
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %} {% if current_user.privilege == 'admin'%}
-              <a class="nav-item nav-link" href="{{ url_for('users') }}">Users</a>
+              <a class="nav-item nav-link" href="{{ url_for('users') }}">{{ _('Users') }}</a>
               {% endif %}
-              <a class="nav-item nav-link" href="{{ url_for('chat_history') }}">Chat History</a>
-              <a class="nav-item nav-link" href="{{ url_for('account') }}">Account</a>
-              <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
+              <a class="nav-item nav-link" href="{{ url_for('chat_history') }}">{{ _('Chat History') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('account') }}">{{ _('Account') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('logout') }}">{{ _('Logout') }}</a>
               {% else %}
-              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+              <a class="nav-item nav-link" href="{{ url_for('login') }}">{{ _('Login') }}</a>
+              <a class="nav-item nav-link" href="{{ url_for('register') }}">{{ _('Register') }}</a>
               {% endif %}
+            </div>
+            <!-- Language Selector -->
+            <div class="navbar-nav">
+              <select onchange="location = '/setlang?lang=' + this.value;" class="rounded border appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
+                <option value="en" {{ 'selected' if get_locale() == 'en' else '' }}>English</option>
+                <option value="fr" {{ 'selected' if get_locale() == 'fr' else '' }}>Français</option>
+            </select>
             </div>
           </div>
         </div>

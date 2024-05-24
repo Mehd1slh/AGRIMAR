@@ -1,11 +1,12 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %} 
+{% block content %}
 <div class="row">
   <div class="col-md-7">
     <div class="content-section">
       <form action="" method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-          <legend class="border-bottom mb-4">Join Our Community Today!</legend>
+          <legend class="border-bottom mb-4">{{ _('Join Our Community Today!') }}</legend>
 
           <div class="form-group">
             {{ form.username.label(class="form-control-label") }} {% if form.username.errors %} {{ form.username(class="form-control form-control-lg is-invalid") }}
@@ -52,7 +53,7 @@
       </form>
     </div>
     <div class="border-top pt-3">
-      <small class="text-light font-weight-bold"> Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}" style="color: rgb(33, 168, 28)">Log In</a> </small>
+      <small class="text-light font-weight-bold"> {{ _('Already Have An Account?') }} <a class="ml-2" href="{{ url_for('login') }}" style="color: rgb(33, 168, 28)">{{ _('Log In') }}</a> </small>
     </div>
   </div>
   <div class="col-md-5 d-flex justify-content-center">
@@ -74,11 +75,7 @@
         path: animationPath,
       });
     }
-
-    // Load multiple Lottie animations
     var aboutAnimation = loadLottieAnimation("login-animation", "static/Animation-Login.json");
-    // Add more animations as needed
-    // Add more animations as needed
   });
 </script>
 {% endblock content %}

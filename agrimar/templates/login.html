@@ -5,7 +5,7 @@
       <form action="" method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-          <legend class="border-bottom mb-4">Log In</legend>
+          <legend class="border-bottom mb-4">{{ _('Log In') }}</legend>
 
           <div class="form-group">
             {{ form.email.label(class="form-control-label") }} {% if form.email.errors %} {{ form.email(class="form-control form-control-lg is-invalid") }}
@@ -31,18 +31,18 @@
           <div class="form-group">
             {{ form.submit(class="btn btn-outline-info")}}
             <small class="text-muted ml-2">
-              <a href="{{ url_for('reset_request') }}">Forgot password ?</a>
+              <a href="{{ url_for('reset_request') }}">{{ _('Forgot password ?') }}</a>
             </small>
           </div>
         </fieldset>
       </form>
     </div>
     <div class="border-top">
-      <small class="text-light font-weight-bold"> Don't Have An Account? <a class="ml-2" href="{{ url_for('register') }} " style="color: rgb(33, 168, 28)">Sign Up Now</a> </small>
+      <small class="text-light font-weight-bold"> {{ _('Don\'t Have An Account?') }} <a class="ml-2" href="{{ url_for('register') }} " style="color: rgb(33, 168, 28)">{{ _('Sign Up Now') }}</a> </small>
     </div>
   </div>
   <div class="col-md-5">
-    <div class="about_img ">
+    <div class="about_img">
       <figure><div id="login-animation"></div></figure>
     </div>
   </div>

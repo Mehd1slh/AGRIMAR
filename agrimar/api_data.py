@@ -1,5 +1,6 @@
 import requests as r
 from opencage.geocoder import OpenCageGeocode
+from flask_babel import _
 
 def get_address_info_from_coords(lat, lon):
     key = 'b54875250f1a448d91b56a8a5b6a50c1'
@@ -28,7 +29,7 @@ def get_weather_data(lat , lon , format="optimized"):
         weather_url = (f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&lang=fr&exclude=minutely,hourly&appid={weather_key}&units=metric")
     response = r.get(weather_url)
     if response.status_code != 200:
-        raise Exception(f"Failed to fetch weather data: {response.status_code}")
+        raise Exception(_(f"Failed to fetch weather data: {response.status_code}"))
     return response.json()
 
 def get_soil_data(lat, lon , format="optimized"):
@@ -49,5 +50,5 @@ def get_soil_data(lat, lon , format="optimized"):
 
     response = r.get(url)
     if response.status_code != 200:
-        raise Exception(f"Failed to fetch soil data: {response.status_code}")
+        raise Exception(_(f"Failed to fetch soil data: {response.status_code}"))
     return response.json()

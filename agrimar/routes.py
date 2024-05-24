@@ -1,16 +1,31 @@
 from datetime import datetime
-from flask import  render_template , redirect , url_for , flash , send_file , request , session 
-from agrimar.chat import CustomChatBot , generate_title
-from agrimar.api_data import  get_address_info_from_coords , get_soil_data , get_weather_data
-from agrimar.forms import RegistartionForm, LoginForm , MapForm , UpdateAccountForm , RequestResetForm , ResetPasswordForm
-from agrimar.model import User , Conversation , Message , PDF
-from agrimar.report import create_soil_graph , create_weather_graphs
-from agrimar import app , db , bcrypt 
-from flask_login import login_user , logout_user , login_required , current_user
+from flask import render_template, redirect, url_for, flash, send_file, request, session, json
+from agrimar.chat import CustomChatBot, generate_title
+from agrimar.api_data import get_address_info_from_coords, get_soil_data, get_weather_data
+from agrimar.forms import RegistrationForm, LoginForm, MapForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from agrimar.model import User, Conversation, Message, PDF
+from agrimar.report import create_soil_graph, create_weather_graphs
+from agrimar import app, db, bcrypt , get_locale , babel
+from flask_login import login_user, logout_user, login_required, current_user
 from PIL import Image
-import secrets , json , os , smtplib
-pdf = PDF()
+import secrets, os, smtplib
+from flask_babel import Babel, _,lazy_gettext as _l, gettext
 
+pdf = PDF()
+@app.route('/setlang')
+def setlang():
+    lang = request.args.get('lang', 'en')
+    session['lang'] = lang
+    return redirect(request.referrer)
+
+@app.context_processor
+def inject_babel():
+    return dict(_=gettext)
+
+@app.context_processor
+def inject_locale():
+    # This makes the function available directly, allowing you to call it in the template
+    return {'get_locale': get_locale}
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -35,8 +50,8 @@ def home():
     img_file = url_for('static', filename='profile pics/' + current_user.img) if current_user.is_authenticated else url_for('static', filename='profile pics/default.jpg')
     if 'conversation_id' in session.keys():
         session.pop('conversation_id')
-    
-    return render_template('home.html', img_file=img_file, form=MapForm())
+
+    return render_template('home.html', img_file=img_file, form=MapForm() , current_locale=get_locale())
 
 
 @app.route("/get", methods=["GET", "POST"])
@@ -45,7 +60,7 @@ def chat():
         user_input = request.form["msg"]
         lat = session.get('lat')
         lon = session.get('lon')
-        ai_output = CustomChatBot(user_input, lat, lon )
+        ai_output = CustomChatBot(user_input, lat, lon)
 
         if current_user.is_authenticated:
             if 'conversation_id' not in session:
@@ -73,10 +88,10 @@ def chat():
 def users():
     if current_user.is_authenticated:
         if current_user.privilege == 'admin':
-            users = User.query.filter_by(privilege = "user").all()
-            return render_template('users.html' , title ='Users' , users = users)
+            users = User.query.filter_by(privilege="user").all()
+            return render_template('users.html', title=_('Users'), users=users)
         else:
-            flash("You Don't have the admin privilege ", 'warning')
+            flash(_("You Don't have the admin privilege"), 'warning')
             return redirect(url_for('home'))
         
 @app.route('/delete_user', methods=['POST'])
@@ -88,9 +103,9 @@ def delete_user():
     if user:
         db.session.delete(user)
         db.session.commit()
-        flash('User has been deleted successfully', 'success')
+        flash(_('User has been deleted successfully'), 'success')
     else:
-        flash('User not found', 'danger')
+        flash(_('User not found'), 'danger')
     
     return redirect(url_for('users'))
 
@@ -102,7 +117,7 @@ def chat_history():
     else:
         conversations = []
 
-    return render_template('chat_history.html', title='Chat History' , cnvs=conversations)
+    return render_template('chat_history.html', title=_('Chat History'), cnvs=conversations)
 
 def fix_json(obj):
     if isinstance(obj, datetime):
@@ -111,21 +126,21 @@ def fix_json(obj):
 @app.route("/conversation/<cnvid>", methods=["POST"])
 def conversation_id(cnvid):
     cnv = Conversation.query.get(cnvid).messages
-    return json.dumps([c.__dict__ for c in cnv],default=fix_json)
+    return json.dumps([c.__dict__ for c in cnv], default=fix_json)
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
-    form = RegistartionForm()
+    form = RegistrationForm()
     if form.validate_on_submit():
         hash_mdp = bcrypt.generate_password_hash(form.mdp.data).decode('utf-8')
-        user = User(username = form.username.data , email = form.email.data , mdp = hash_mdp)
+        user = User(username=form.username.data, email=form.email.data, mdp=hash_mdp)
         db.session.add(user)
         db.session.commit()
-        flash('Account created successfully! you can now log in to your account', 'success')
+        flash(_('Account created successfully! You can now log in to your account'), 'success')
         return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
+    return render_template('register.html', title=_('Register'), form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -134,15 +149,15 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email = form.email.data).first()
-        if user and bcrypt.check_password_hash(user.mdp , form.mdp.data ):
-            flash("Welcome Back "+user.username+"!", 'success')
-            login_user(user,remember= form.remember.data)
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.mdp, form.mdp.data):
+            flash(_("Welcome Back %(username)s!", username=user.username), 'success')
+            login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash("Login Unsuccessful, please check your email and password", 'danger')
-    return render_template('login.html', title='Login', form=form)
+            flash(_('Login Unsuccessful, please check your email and password'), 'danger')
+    return render_template('login.html', title=_('Login'), form=form)
 
 
 @app.route("/logout")
@@ -159,20 +174,20 @@ def logout():
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
-    f_name , f_ext = os.path.splitext(form_picture.filename)
+    f_name, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile pics', picture_fn)
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
     # Delete previous picture if it exists
     if current_user.img:
         prev_picture_path = os.path.join(app.root_path, 'static/profile_pics', current_user.img)
         if os.path.exists(prev_picture_path):
             os.remove(prev_picture_path)
-    
-    output_size = (125,125)
+    output_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
     return picture_fn
+
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -184,14 +199,13 @@ def account():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated!','success')
+        flash(_('Your account has been updated!'), 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    img_file = url_for('static' , filename = 'profile pics/' + current_user.img)
-    return render_template('account.html', title='Account' , img_file=img_file , form=form)
-
+    img_file = url_for('static', filename='profile_pics/' + current_user.img)
+    return render_template('account.html', title=_('Account'), img_file=img_file, form=form)
 
 def send_reset_email(user):
     email_sender = 'fstbm.agrimar@gmail.com'
@@ -205,13 +219,13 @@ def send_reset_email(user):
     server.login(email_sender, email_password)
      
     reset_link = url_for('reset_token', token=token, _external=True)
-    msg = f'''Subject: Password Reset Request
+    msg = _('''Subject: Password Reset Request
 
 To reset your password, visit the following link:
 {reset_link}
 
 If you did not make this request, then simply ignore this email and no changes will be made.
-'''
+''')
     server.sendmail(email_sender, email_reciever, msg)
     server.quit()
 
@@ -223,10 +237,9 @@ def reset_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
-        flash('An email has been sent with instructions to reset your password. If you didn`t find it on your inbox check the spam section' ,'info')
+        flash(_('An email has been sent with instructions to reset your password. If you didn`t find it in your inbox, check the spam section.'), 'info')
         return redirect(url_for('login'))
-    return render_template('reset_request.html', title='Reset password', form=form)
-
+    return render_template('reset_request.html', title=_('Reset password'), form=form)
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
@@ -234,16 +247,16 @@ def reset_token(token):
         return redirect(url_for('home'))
     user = User.verify_reset_token(token)
     if user is None:
-        flash('That is an invalid or expired token', 'warning')
+        flash(_('That is an invalid or expired token'), 'warning')
         return redirect(url_for('reset_request'))
     form = ResetPasswordForm()
     if form.validate_on_submit():
         hash_mdp = bcrypt.generate_password_hash(form.mdp.data).decode('utf-8')
         user.mdp = hash_mdp
         db.session.commit()
-        flash('Your password has been updated! you can now log in to your account', 'success')
+        flash(_('Your password has been updated! You can now log in to your account'), 'success')
         return redirect(url_for('login'))
-    return render_template('reset_token.html', title='Reset password', form=form)
+    return render_template('reset_token.html', title=_('Reset password'), form=form)
 
 
 @app.route("/download")
@@ -324,8 +337,9 @@ def download_report():
         # Save the PDF
         pdf.output('agrimar/data_graphs+pdf/Rapport_AGRIMAR.pdf')
         return send_file('data_graphs+pdf/Rapport_AGRIMAR.pdf', as_attachment=True)
-
     else:
-        flash('Please insert you coordinates first', 'warning')
+        flash(_('Please insert your coordinates first'), 'warning')
         return redirect(url_for("home"))
+
+
 

@@ -1,4 +1,5 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %}
+{% block content %}
 <body>
   <div class="container">
     <div class="row justify-content-center align-items-start">
@@ -7,9 +8,9 @@
         <div class="card-header msg_head">
           <div class="d-flex bd-highlight">
             <div class="chat-history w-100">
-              <h2 class="text-center">Chat History</h2>
+              <h2 class="text-center">{{ _('Chat History') }}</h2>
               {% if cnvs|length == 0 %}
-              <p class="text-center text-secondary font-weight-bold">You have no recent conversations</p>
+              <p class="text-center text-secondary font-weight-bold">{{ _('You have no recent conversations') }}</p>
               {% else %}
               <ul id="chatList" class="list-group">
                 {% for c in cnvs %}
@@ -31,7 +32,7 @@
           <div class="card-header msg_head">
             <div class="d-flex bd-highlight">
               <div class="user_info">
-                <h2 id="chatTitle">Select a chat to view</h2>
+                <h2 id="chatTitle">{{ _('Select a chat to view') }}</h2>
               </div>
             </div>
           </div>

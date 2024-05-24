@@ -1,0 +1,404 @@
+# Translations template for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-05-24 06:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.14.0\n"
+
+#: agrimar/forms.py:10 agrimar/forms.py:41
+msgid "Username"
+msgstr ""
+
+#: agrimar/forms.py:11 agrimar/forms.py:28 agrimar/forms.py:42
+#: agrimar/forms.py:59
+msgid "Email"
+msgstr ""
+
+#: agrimar/forms.py:12 agrimar/forms.py:29 agrimar/forms.py:68
+msgid "Password"
+msgstr ""
+
+#: agrimar/forms.py:13 agrimar/forms.py:69
+msgid "Confirm Password"
+msgstr ""
+
+#: agrimar/forms.py:14
+msgid "Sign Up"
+msgstr ""
+
+#: agrimar/forms.py:19 agrimar/forms.py:50
+msgid "That username is taken, please choose another one"
+msgstr ""
+
+#: agrimar/forms.py:24 agrimar/forms.py:56
+msgid "That email is taken, please choose another one"
+msgstr ""
+
+#: agrimar/forms.py:30
+msgid "Remember Me"
+msgstr ""
+
+#: agrimar/forms.py:31 agrimar/routes.py:146 agrimar/templates/layout.html:48
+msgid "Login"
+msgstr ""
+
+#: agrimar/forms.py:35 agrimar/templates/home.html:115
+#: agrimar/templates/home.html:125
+msgid "Latitude"
+msgstr ""
+
+#: agrimar/forms.py:36 agrimar/templates/home.html:117
+#: agrimar/templates/home.html:126
+msgid "Longitude"
+msgstr ""
+
+#: agrimar/forms.py:37 agrimar/templates/home.html:119
+#: agrimar/templates/home.html:357
+msgid "Submit"
+msgstr ""
+
+#: agrimar/forms.py:43
+msgid "Update Profile Picture"
+msgstr ""
+
+#: agrimar/forms.py:44
+msgid "Update"
+msgstr ""
+
+#: agrimar/forms.py:60
+msgid "Request Password Reset"
+msgstr ""
+
+#: agrimar/forms.py:65
+msgid "There is no account with that email. You should register first"
+msgstr ""
+
+#: agrimar/forms.py:70 agrimar/templates/reset_request.html:7
+#: agrimar/templates/reset_token.html:7
+msgid "Reset Password"
+msgstr ""
+
+#: agrimar/routes.py:78 agrimar/templates/layout.html:42
+msgid "Users"
+msgstr ""
+
+#: agrimar/routes.py:80
+msgid "You Don't have the admin privilege"
+msgstr ""
+
+#: agrimar/routes.py:92
+msgid "User has been deleted successfully"
+msgstr ""
+
+#: agrimar/routes.py:94
+msgid "User not found"
+msgstr ""
+
+#: agrimar/routes.py:106 agrimar/templates/chat_history.html:11
+#: agrimar/templates/layout.html:44
+msgid "Chat History"
+msgstr ""
+
+#: agrimar/routes.py:127
+msgid "Account created successfully! You can now log in to your account"
+msgstr ""
+
+#: agrimar/routes.py:129 agrimar/templates/layout.html:49
+msgid "Register"
+msgstr ""
+
+#: agrimar/routes.py:140
+#, python-format
+msgid "Welcome Back %(username)s!"
+msgstr ""
+
+#: agrimar/routes.py:145
+msgid "Login Unsuccessful, please check your email and password"
+msgstr ""
+
+#: agrimar/routes.py:188
+msgid "Your account has been updated!"
+msgstr ""
+
+#: agrimar/routes.py:194 agrimar/templates/layout.html:45
+msgid "Account"
+msgstr ""
+
+#: agrimar/routes.py:208
+msgid ""
+"Subject: Password Reset Request\n"
+"\n"
+"To reset your password, visit the following link:\n"
+"{reset_link}\n"
+"\n"
+"If you did not make this request, then simply ignore this email and no "
+"changes will be made.\n"
+msgstr ""
+
+#: agrimar/routes.py:226
+msgid ""
+"An email has been sent with instructions to reset your password. If you "
+"didn`t find it in your inbox, check the spam section."
+msgstr ""
+
+#: agrimar/routes.py:228 agrimar/routes.py:245
+msgid "Reset password"
+msgstr ""
+
+#: agrimar/routes.py:236
+msgid "That is an invalid or expired token"
+msgstr ""
+
+#: agrimar/routes.py:243
+msgid "Your password has been updated! You can now log in to your account"
+msgstr ""
+
+#: agrimar/routes.py:327
+msgid "Please insert your coordinates first"
+msgstr ""
+
+#: agrimar/templates/account.html:14
+msgid "Account infos"
+msgstr ""
+
+#: agrimar/templates/chat_history.html:13
+msgid "You have no recent conversations"
+msgstr ""
+
+#: agrimar/templates/chat_history.html:35
+msgid "Select a chat to view"
+msgstr ""
+
+#: agrimar/templates/home.html:85
+msgid "AgriMar"
+msgstr ""
+
+#: agrimar/templates/home.html:86
+msgid "Your Friendly Agriculture Assistant"
+msgstr ""
+
+#: agrimar/templates/home.html:93
+msgid "Type your message..."
+msgstr ""
+
+#: agrimar/templates/home.html:98
+msgid "Create FREE account to keep conversation history"
+msgstr ""
+
+#: agrimar/templates/home.html:106
+msgid "Choose Location"
+msgstr ""
+
+#: agrimar/templates/home.html:127
+msgid "City / Town / Village"
+msgstr ""
+
+#: agrimar/templates/home.html:128
+msgid "Region / State"
+msgstr ""
+
+#: agrimar/templates/home.html:129
+msgid "Country"
+msgstr ""
+
+#: agrimar/templates/home.html:134
+msgid ""
+"Insert location for precised AI response (Soil properties + Weather "
+"forecast)"
+msgstr ""
+
+#: agrimar/templates/home.html:259
+msgid "About AGRIMAR"
+msgstr ""
+
+#: agrimar/templates/home.html:259
+msgid "Farm and company"
+msgstr ""
+
+#: agrimar/templates/home.html:261
+msgid ""
+"Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is "
+"designed to provide farmers and agriculture enthusiasts with vital "
+"information tailored to their specific locations. Whether you need up-to-"
+"date weather forecasts, detailed soil data, or other agricultural\n"
+"                insights, AgriMar has got you covered. Our service is "
+"free, simple to use, and accessible to everyone. Get the information you "
+"need to make informed decisions and optimize your farming practices with "
+"ease."
+msgstr ""
+
+#: agrimar/templates/home.html:264
+msgid "Read More"
+msgstr ""
+
+#: agrimar/templates/home.html:284 agrimar/templates/layout.html:19
+msgid "AGRIMAR"
+msgstr ""
+
+#: agrimar/templates/home.html:284
+msgid "REPORT"
+msgstr ""
+
+#: agrimar/templates/home.html:294
+msgid "Weather data"
+msgstr ""
+
+#: agrimar/templates/home.html:296
+msgid ""
+"Detailed global current weather data and weather forecasts. This includes"
+" temperature, precipitation, wind speed, humidity, atmospheric pressure, "
+"and more."
+msgstr ""
+
+#: agrimar/templates/home.html:301
+msgid "Soil data"
+msgstr ""
+
+#: agrimar/templates/home.html:303
+msgid ""
+"Global soil informations provided by ISRIC, contains various soil "
+"properties, such as soil organic carbon, pH, soil texture (sand, silt, "
+"clay), bulk density, cation exchange capacity, and more."
+msgstr ""
+
+#: agrimar/templates/home.html:308
+msgid "NDVI indicator"
+msgstr ""
+
+#: agrimar/templates/home.html:310
+msgid ""
+"consectetur adipiscing elit, sed do eiusmodmpor incididunt ut labore et "
+"dolore magna"
+msgstr ""
+
+#: agrimar/templates/home.html:315
+msgid "Download Report"
+msgstr ""
+
+#: agrimar/templates/home.html:316
+msgid ""
+"the data based on coords and may take time to generate the report (up to "
+"5mins)"
+msgstr ""
+
+#: agrimar/templates/home.html:336
+msgid ""
+"A project by Salih El Mehdi & Ouzat Soumia, powered by Chat GPT-4, "
+"Openweather, OpenStreetMap, and SoilGrids. It aims to provide the best "
+"agricultural information to users."
+msgstr ""
+
+#: agrimar/templates/home.html:341
+msgid "Quick links"
+msgstr ""
+
+#: agrimar/templates/home.html:343
+msgid "Join Us"
+msgstr ""
+
+#: agrimar/templates/home.html:344
+msgid "Maintenance"
+msgstr ""
+
+#: agrimar/templates/home.html:345
+msgid "Language Packs"
+msgstr ""
+
+#: agrimar/templates/home.html:346
+msgid "LearnPress"
+msgstr ""
+
+#: agrimar/templates/home.html:347
+msgid "Release Status"
+msgstr ""
+
+#: agrimar/templates/home.html:354
+msgid "Subcribe email"
+msgstr ""
+
+#: agrimar/templates/home.html:355
+msgid ""
+"Enter your email below to get the latest updates, join our AGRIMAR "
+"community!"
+msgstr ""
+
+#: agrimar/templates/home.html:356
+msgid "Your Email"
+msgstr ""
+
+#: agrimar/templates/home.html:363 agrimar/templates/layout.html:37
+msgid "Contact Us"
+msgstr ""
+
+#: agrimar/templates/home.html:367
+msgid "Campus Mghilla, BP 523, 23000 Béni Mellal"
+msgstr ""
+
+#: agrimar/templates/home.html:384
+msgid "All Rights Reserved."
+msgstr ""
+
+#: agrimar/templates/layout.html:17
+msgid "AGRIMAR -"
+msgstr ""
+
+#: agrimar/templates/layout.html:26
+msgid "Toggle navigation"
+msgstr ""
+
+#: agrimar/templates/layout.html:31
+msgid "Your Logo"
+msgstr ""
+
+#: agrimar/templates/layout.html:34
+msgid "Home"
+msgstr ""
+
+#: agrimar/templates/layout.html:35
+msgid "About"
+msgstr ""
+
+#: agrimar/templates/layout.html:36
+msgid "More"
+msgstr ""
+
+#: agrimar/templates/layout.html:46
+msgid "Logout"
+msgstr ""
+
+#: agrimar/templates/login.html:8 agrimar/templates/register.html:56
+msgid "Log In"
+msgstr ""
+
+#: agrimar/templates/login.html:34
+msgid "Forgot password ?"
+msgstr ""
+
+#: agrimar/templates/login.html:41
+msgid "Don't Have An Account?"
+msgstr ""
+
+#: agrimar/templates/login.html:41
+msgid "Sign Up Now"
+msgstr ""
+
+#: agrimar/templates/register.html:9
+msgid "Join Our Community Today!"
+msgstr ""
+
+#: agrimar/templates/register.html:56
+msgid "Already Have An Account?"
+msgstr ""
+
