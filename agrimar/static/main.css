@@ -390,15 +390,14 @@ h6 {
 
 .offer-bg {
   background: #052501;
-  padding: 90px 0px;
 }
 
 .offer .offer-bg {
   background: #052501;
   text-align: center;
-  padding: 20px 0px;
   border-radius: 15px;
   margin-bottom: 120px;
+  padding-top: 15px;
 }
 .offer .offer-bg .offer_box {
   text-align: center;
@@ -472,7 +471,7 @@ h6 {
 /* footer */
 .footer {
   background: #425063;
-  padding: 90px 0px;
+  padding: 55px 0px;
 }
 
 ul.loca li {

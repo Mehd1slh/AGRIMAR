@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
 
 class MapForm(FlaskForm):
     lat = FloatField('Latitude' , validators=[DataRequired() ])
-    lon = FloatField('Longtitude' , validators=[DataRequired() ])
+    lon = FloatField('Longitude' , validators=[DataRequired() ])
     submit = SubmitField('Submit')
     
 

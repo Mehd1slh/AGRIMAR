@@ -28,6 +28,7 @@
         z-index: 1000;
         width: 30%; /* Adjust the width as needed */
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
       }
 
       #map {
@@ -280,7 +281,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="title ttl">
-              <h2>Discover <strong class="black"> More</strong></h2>
+              <h2>AGRIMAR <strong class="black"> REPORT</strong></h2>
             </div>
           </div>
         </div>
@@ -292,14 +293,14 @@
               <div class="offer_box">
                 <h3>Weather data</h3>
                 <figure><div id="weather-animation" class="lottie-container"></div></figure>
-                <p>consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+                <p>Detailed global current weather data and weather forecasts. This includes temperature, precipitation, wind speed, humidity, atmospheric pressure, and more.</p>
               </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin_ttt">
               <div class="offer_box">
                 <h3>Soil data</h3>
                 <figure><div id="soil-animation" class="lottie-container"></div></figure>
-                <p>consectetur adipiscing elit, sed do eiusmodmpor incididunt ut labore et dolore magna aliqua. Ut enim ad</p>
+                <p>Global soil informations provided by ISRIC , contains various soil properties, such as soil organic carbon, pH, soil texture (sand, silt, clay), bulk density, cation exchange capacity, and more.</p>
               </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk">
@@ -311,7 +312,8 @@
             </div>
 
             <div class="col-md-12">
-              <a class="read-more">See More</a>
+              <a href="/download" class="read-more">Download Report</a>
+              <div class="user_info"><p>⚠️ the data based on coords and may take time to generate the report (up to 5mins)</p></div>
             </div>
           </div>
         </div>
@@ -329,10 +331,10 @@
           <div class="row">
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
               <div class="address">
-                <a href="home.html">
+                <a href="{{url_for('home')}}">
                   <img src="static/AGRIMAR 2.png" alt="logo" class="footer-logo" />
                 </a>
-                <p>dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et sdolor sit amet, consectetur adipiscing elit,</p>
+                <p>A project by Salih El Mehdi & Ouzat Soumia, powered by Chat GPT-4, Openweather, OpenStreetMap, and SoilGrids. It aims to provide the best agricultural information to users.</p>
               </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">

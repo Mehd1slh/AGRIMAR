@@ -33,7 +33,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}#">Home</a>
               <a class="nav-item nav-link" href="{{ url_for('home') }}#about">About</a>
-              <a class="nav-item nav-link" href="{{ url_for('home') }}#discover">Discover</a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}#discover">More</a>
               <a class="nav-item nav-link" href="{{ url_for('home') }}#contact_us">Contact Us</a>
             </div>
             <!-- Navbar Right Side -->
@@ -59,9 +59,9 @@
         <div class="col-md-12 h-100">
           <!-- flashs are one time alerts-->
 
-          <div class="col-md-10">
+          <div class="col-md-12 d-flex justify-content-center">
             {% with messages = get_flashed_messages(with_categories =true) %} {% if messages %} {% for category , message in messages%}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
+            <div class="alert alert-{{ category }} text-center">{{ message }}</div>
             {% endfor %} {% endif %} {% endwith %}
           </div>
           {% block content %}{% endblock %}
