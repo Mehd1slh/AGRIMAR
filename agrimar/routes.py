@@ -9,7 +9,7 @@ from agrimar import app, db, bcrypt , get_locale , babel
 from flask_login import login_user, logout_user, login_required, current_user
 from PIL import Image
 import secrets, os, smtplib
-from flask_babel import Babel, _,lazy_gettext as _l, gettext
+from flask_babel import Babel, _,lazy_gettext as  gettext
 
 pdf = PDF()
 @app.route('/setlang')
@@ -47,7 +47,7 @@ def home():
             session['region'] = address_info['region']
             session['country'] = address_info['country']
 
-    img_file = url_for('static', filename='profile pics/' + current_user.img) if current_user.is_authenticated else url_for('static', filename='profile pics/default.jpg')
+    img_file = url_for('static', filename='profile_pics/' + current_user.img) if current_user.is_authenticated else url_for('static', filename='profile_pics/default.jpg')
     if 'conversation_id' in session.keys():
         session.pop('conversation_id')
 
@@ -89,7 +89,7 @@ def users():
     if current_user.is_authenticated:
         if current_user.privilege == 'admin':
             users = User.query.filter_by(privilege="user").all()
-            return render_template('users.html', title=_('Users'), users=users)
+            return render_template('users.html', title=_('Users'), users=users, current_locale=session['lang'])
         else:
             flash(_("You Don't have the admin privilege"), 'warning')
             return redirect(url_for('home'))
@@ -117,7 +117,7 @@ def chat_history():
     else:
         conversations = []
 
-    return render_template('chat_history.html', title=_('Chat History'), cnvs=conversations)
+    return render_template('chat_history.html', title=_('Chat History'), cnvs=conversations, current_locale=session['lang'])
 
 def fix_json(obj):
     if isinstance(obj, datetime):
@@ -140,7 +140,7 @@ def register():
         db.session.commit()
         flash(_('Account created successfully! You can now log in to your account'), 'success')
         return redirect(url_for('login'))
-    return render_template('register.html', title=_('Register'), form=form)
+    return render_template('register.html', title=_('Register'), form=form, current_locale=session['lang'])
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -157,7 +157,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash(_('Login Unsuccessful, please check your email and password'), 'danger')
-    return render_template('login.html', title=_('Login'), form=form)
+    return render_template('login.html', title=_('Login'), form=form, current_locale=session['lang'])
 
 
 @app.route("/logout")
@@ -205,7 +205,7 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     img_file = url_for('static', filename='profile_pics/' + current_user.img)
-    return render_template('account.html', title=_('Account'), img_file=img_file, form=form)
+    return render_template('account.html', title=_('Account'), img_file=img_file, form=form, current_locale=session['lang'])
 
 def send_reset_email(user):
     email_sender = 'fstbm.agrimar@gmail.com'
@@ -239,7 +239,7 @@ def reset_request():
         send_reset_email(user)
         flash(_('An email has been sent with instructions to reset your password. If you didn`t find it in your inbox, check the spam section.'), 'info')
         return redirect(url_for('login'))
-    return render_template('reset_request.html', title=_('Reset password'), form=form)
+    return render_template('reset_request.html', title=_('Reset password'), form=form, current_locale=session['lang'])
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
@@ -256,7 +256,7 @@ def reset_token(token):
         db.session.commit()
         flash(_('Your password has been updated! You can now log in to your account'), 'success')
         return redirect(url_for('login'))
-    return render_template('reset_token.html', title=_('Reset password'), form=form)
+    return render_template('reset_token.html', title=_('Reset password'), form=form, current_locale=session['lang'])
 
 
 @app.route("/download")

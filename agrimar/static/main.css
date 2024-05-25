@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap");
 /* Body styles */
 html {
   scroll-behavior: smooth;
 }
+
 body {
   background: rgb(44, 47, 59);
   background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43));
@@ -10,6 +12,11 @@ body {
   margin-top: 5rem;
   font-family: "Poppins", sans-serif;
 }
+
+[lang="ar"] body {
+  font-family: "El Messiri", sans-serif;
+}
+
 /* In your specific page's CSS or a separate stylesheet */
 .container-wrapper.full-width {
   width: 150%; /* Adjust width if needed */
@@ -42,7 +49,7 @@ h6 {
 
 /* Navbar link styles */
 .site-header .navbar-nav .nav-link {
-  font-size: 18px; /* Increase font size of navbar links */
+  font-size: 16px; /* Increase font size of navbar links */
   color: #cbd5db;
 }
 

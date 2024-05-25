@@ -1,33 +1,61 @@
 {% extends "layout.html" %} {% block content %}
-<div class="col-md-10">
-  <div class="content-section">
-    <form action="" method="POST">
-      {{ form.hidden_tag() }}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">{{ _('Reset Password') }}</legend>
+<div class="row">
+  <div class="col-md-7">
+    <div class="content-section">
+      <form action="" method="POST">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">{{ _('Reset Password') }}</legend>
 
-        <div class="form-group">
-          {{ form.mdp.label(class="form-control-label") }} {% if form.mdp.errors %} {{ form.mdp(class="form-control form-control-lg is-invalid") }}
-          <div class="invalid-feedback">
-            {% for error in form.mdp.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
+          <div class="form-group">
+            {{ form.mdp.label(class="form-control-label") }} {% if form.mdp.errors %} {{ form.mdp(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.mdp.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.mdp(class="form-control form-control-lg") }} {% endif %}
           </div>
-          {% else %} {{ form.mdp(class="form-control form-control-lg") }} {% endif %}
-        </div>
 
-        <div class="form-group">
-          {{ form.con_mdp.label(class="form-control-label") }} {% if form.con_mdp.errors %} {{ form.con_mdp(class="form-control form-control-lg is-invalid") }}
-          <div class="invalid-feedback">
-            {% for error in form.con_mdp.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
+          <div class="form-group">
+            {{ form.con_mdp.label(class="form-control-label") }} {% if form.con_mdp.errors %} {{ form.con_mdp(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.con_mdp.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %} {{ form.con_mdp(class="form-control form-control-lg") }} {% endif %}
           </div>
-          {% else %} {{ form.con_mdp(class="form-control form-control-lg") }} {% endif %}
-        </div>
-        <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
-      </fieldset>
-    </form>
+          <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
+        </fieldset>
+      </form>
+    </div>
   </div>
+  <div class="col-md-5">
+    <div class="about_img">
+      <figure><div id="forgot-animation"></div></figure>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Function to load Lottie animation
+      function loadLottieAnimation(containerId, animationPath) {
+        return lottie.loadAnimation({
+          container: document.getElementById(containerId),
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          path: animationPath,
+        });
+      }
+
+      // Load multiple Lottie animations
+      var aboutAnimation = loadLottieAnimation("forgot-animation", "static/Animation-Forgot.json");
+      // Add more animations as needed
+      // Add more animations as needed
+    });
+  </script>
 </div>
+
 {% endblock content %}

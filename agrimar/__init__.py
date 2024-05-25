@@ -11,14 +11,14 @@ def get_locale():
     # Check if the language query parameter is set and valid
     if 'lang' in request.args:
         lang = request.args.get('lang')
-        if lang in ['en', 'fr']:
+        if lang in ['en', 'fr' , 'ar']:
             session['lang'] = lang
             return session['lang']
     # If not set via query, check if we have it stored in the session
     elif 'lang' in session:
         return session.get('lang')
     # Otherwise, use the browser's preferred language
-    return request.accept_languages.best_match(['en', 'fr'])
+    return request.accept_languages.best_match(['en', 'fr' , 'ar'])
 
 def get_timezone():
     user = getattr(g, 'user', None)

@@ -1,5 +1,4 @@
-{% extends "layout.html" %}
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <body>
   <div class="container">
     <div class="row justify-content-center align-items-start">
@@ -67,7 +66,7 @@
           messageDiv.innerHTML = `
                 <div class="msg_cotainer_send">${message.content}<span class="msg_time_send">${formatDateTime(message.time)}</span></div>
                 <div class="img_cont_msg">
-                  <img src="/static/profile pics/{{current_user.img}}" class="rounded-circle user_img_msg">
+                  <img src="/static/profile_pics/{{current_user.img}}" class="rounded-circle user_img_msg">
                 </div>`;
         } else {
           messageDiv.classList.add("d-flex", "justify-content-start", "mb-4");

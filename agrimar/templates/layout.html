@@ -52,9 +52,10 @@
             </div>
             <!-- Language Selector -->
             <div class="navbar-nav">
-              <select onchange="location = '/setlang?lang=' + this.value;" class="rounded border appearance-none py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
+              <select onchange="location = '/setlang?lang=' + this.value;" class="rounded border appearance-none py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full">
                 <option value="en" {{ 'selected' if get_locale() == 'en' else '' }}>English</option>
                 <option value="fr" {{ 'selected' if get_locale() == 'fr' else '' }}>Français</option>
+                <option value="ar" {{ 'selected' if get_locale() == 'ar' else '' }}>العربية</option>
             </select>
             </div>
           </div>

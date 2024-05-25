@@ -1,4 +1,4 @@
-# French translations for PROJECT.
+# Arabic translations for PROJECT.
 # Copyright (C) 2024 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
@@ -8,154 +8,136 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2024-05-25 05:03+0100\n"
-"PO-Revision-Date: 2024-05-24 06:13+0100\n"
+"PO-Revision-Date: 2024-05-25 03:16+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: fr\n"
-"Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: ar\n"
+"Language-Team: ar <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : "
+"n%100>=3 && n%100<=10 ? 3 : n%100>=0 && n%100<=2 ? 4 : 5);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: agrimar/forms.py:20 agrimar/forms.py:51
-#, fuzzy
 msgid " Username "
-msgstr "Nom d'utilisateur"
+msgstr "اسم المستخدم"
 
 #: agrimar/forms.py:21 agrimar/forms.py:38 agrimar/forms.py:52
 #: agrimar/forms.py:69
-#, fuzzy
 msgid " Email "
-msgstr "Email"
+msgstr "البريد الإلكتروني"
 
 #: agrimar/forms.py:22 agrimar/forms.py:39 agrimar/forms.py:78
-#, fuzzy
 msgid " Password "
-msgstr "Mot de passe"
+msgstr "كلمة المرور"
 
 #: agrimar/forms.py:23 agrimar/forms.py:79
-#, fuzzy
 msgid " Confirm Password "
-msgstr "Confirmez le mot de passe"
+msgstr "تأكيد كلمة المرور"
 
 #: agrimar/forms.py:24
-#, fuzzy
 msgid " Sign Up "
-msgstr "S'inscrire"
+msgstr "التسجيل"
 
 #: agrimar/forms.py:29 agrimar/forms.py:60
-#, fuzzy
 msgid " That username is taken, please choose another one "
-msgstr "Ce nom d'utilisateur est déjà pris, veuillez en choisir un autre"
+msgstr "اسم المستخدم هذا موجود بالفعل، يرجى اختيار اسم آخر"
 
 #: agrimar/forms.py:34 agrimar/forms.py:66
-#, fuzzy
 msgid " That email is taken, please choose another one "
-msgstr "Cet email est déjà pris, veuillez en choisir un autre"
+msgstr "البريد الإلكتروني هذا موجود بالفعل، يرجى اختيار بريد إلكتروني آخر"
 
 #: agrimar/forms.py:40
-#, fuzzy
 msgid " Remember Me "
-msgstr "Se souvenir de moi"
+msgstr "تذكرني"
 
 #: agrimar/forms.py:41
-#, fuzzy
 msgid " Login "
-msgstr "Connexion"
+msgstr "تسجيل الدخول"
 
 #: agrimar/forms.py:45
-#, fuzzy
 msgid " Latitude "
-msgstr "Latitude"
+msgstr "خط العرض"
 
 #: agrimar/forms.py:46
-#, fuzzy
 msgid " Longitude "
-msgstr "Longitude"
+msgstr "خط الطول"
 
 #: agrimar/forms.py:47
-#, fuzzy
 msgid " Submit "
-msgstr "Soumettre"
+msgstr "إرسال"
 
 #: agrimar/forms.py:53
-#, fuzzy
 msgid " Update Profile Picture "
-msgstr "Mettre à jour la photo de profil"
+msgstr "تحديث صورة الملف الشخصي"
 
 #: agrimar/forms.py:54
-#, fuzzy
 msgid " Update "
-msgstr "Mettre à jour"
+msgstr "تحديث"
 
 #: agrimar/forms.py:70
-#, fuzzy
 msgid " Request Password Reset "
-msgstr "Demander la réinitialisation du mot de passe"
+msgstr "طلب إعادة تعيين كلمة المرور"
 
 #: agrimar/forms.py:75
-#, fuzzy
 msgid " There is no account with that email. You should register first "
-msgstr "Il n'y a pas de compte avec cet email. Vous devez d'abord vous inscrire"
+msgstr "لا يوجد حساب بهذا البريد الإلكتروني. يجب أن تقوم بالتسجيل أولاً"
 
 #: agrimar/forms.py:80
-#, fuzzy
 msgid " Reset Password "
-msgstr "Réinitialiser le mot de passe"
+msgstr "إعادة تعيين كلمة المرور"
 
 #: agrimar/routes.py:92 agrimar/templates/layout.html:43
 #: agrimar/templates/users.html:3
 msgid "Users"
-msgstr "Utilisateurs"
+msgstr "المستخدمون"
 
 #: agrimar/routes.py:94
 msgid "You Don't have the admin privilege"
-msgstr "Vous n'avez pas les privilèges d'administrateur"
+msgstr "ليس لديك صلاحية المشرف"
 
 #: agrimar/routes.py:106
 msgid "User has been deleted successfully"
-msgstr "L'utilisateur a été supprimé avec succès"
+msgstr "تم حذف المستخدم بنجاح"
 
 #: agrimar/routes.py:108
 msgid "User not found"
-msgstr "Utilisateur non trouvé"
+msgstr "المستخدم غير موجود"
 
 #: agrimar/routes.py:120 agrimar/templates/chat_history.html:10
 #: agrimar/templates/layout.html:45
 msgid "Chat History"
-msgstr "Historique"
+msgstr "سجل المحادثات"
 
 #: agrimar/routes.py:141
 msgid "Account created successfully! You can now log in to your account"
-msgstr ""
-"Compte créé avec succès ! Vous pouvez maintenant vous connecter à votre "
-"compte"
+msgstr "تم إنشاء الحساب بنجاح! يمكنك الآن تسجيل الدخول إلى حسابك"
 
 #: agrimar/routes.py:143 agrimar/templates/layout.html:50
 msgid "Register"
-msgstr "S'inscrire"
+msgstr "تسجيل"
 
 #: agrimar/routes.py:154
 #, python-format
 msgid "Welcome Back %(username)s!"
-msgstr "Bonjour %(username)s !"
+msgstr "!%(username)s مرحبًا بعودتك "
 
 #: agrimar/routes.py:159
 msgid "Login Unsuccessful, please check your email and password"
-msgstr "Échec de la connexion, veuillez vérifier votre email et mot de passe"
+msgstr "فشل تسجيل الدخول، يرجى التحقق من بريدك الإلكتروني وكلمة المرور"
 
 #: agrimar/routes.py:160 agrimar/templates/layout.html:49
 msgid "Login"
-msgstr "Connexion"
+msgstr "تسجيل الدخول"
 
 #: agrimar/routes.py:202
 msgid "Your account has been updated!"
-msgstr "Votre compte a été mis à jour !"
+msgstr "تم تحديث حسابك!"
 
 #: agrimar/routes.py:208 agrimar/templates/layout.html:46
 msgid "Account"
-msgstr "Compte"
+msgstr "الحساب"
 
 #: agrimar/routes.py:222
 msgid ""
@@ -167,115 +149,111 @@ msgid ""
 "If you did not make this request, then simply ignore this email and no "
 "changes will be made.\n"
 msgstr ""
-"Sujet : Demande de réinitialisation du mot de passe\n"
+"الموضوع: طلب إعادة تعيين كلمة المرور\n"
 "\n"
-"Pour réinitialiser votre mot de passe, visitez le lien suivant :\n"
+"لإعادة تعيين كلمة المرور الخاصة بك، قم بزيارة الرابط التالي:\n"
 "{reset_link}\n"
 "\n"
-"Si vous n'avez pas fait cette demande, ignorez simplement cet email et "
-"aucun changement ne sera apporté.\n"
+"إذا لم تطلب هذا، فقط تجاهل هذا البريد الإلكتروني ولن يتم إجراء أي "
+"تغييرات.\n"
 
 #: agrimar/routes.py:240
 msgid ""
 "An email has been sent with instructions to reset your password. If you "
 "didn`t find it in your inbox, check the spam section."
 msgstr ""
-"Un email a été envoyé avec des instructions pour réinitialiser votre mot "
-"de passe. Si vous ne le trouvez pas dans votre boîte de réception, "
-"vérifiez la section spam."
+"تم إرسال بريد إلكتروني يحتوي على تعليمات لإعادة تعيين كلمة المرور الخاصة "
+"بك. إذا لم تجده في صندوق الوارد الخاص بك، فتحقق من قسم البريد المزعج."
 
 #: agrimar/routes.py:242 agrimar/routes.py:259
 msgid "Reset password"
-msgstr "Réinitialiser le mot de passe"
+msgstr "إعادة تعيين كلمة المرور"
 
 #: agrimar/routes.py:250
 msgid "That is an invalid or expired token"
-msgstr "C'est un jeton invalide ou expiré"
+msgstr "هذا رمز غير صالح أو منتهي الصلاحية"
 
 #: agrimar/routes.py:257
 msgid "Your password has been updated! You can now log in to your account"
-msgstr ""
-"Votre mot de passe a été mis à jour ! Vous pouvez maintenant vous "
-"connecter à votre compte"
+msgstr "تم تحديث كلمة مرورك! يمكنك الآن تسجيل الدخول إلى حسابك"
 
 #: agrimar/routes.py:341
 msgid "Please insert your coordinates first"
-msgstr "Veuillez d'abord insérer vos coordonnées"
+msgstr "يرجى إدخال إحداثياتك أولاً"
 
 #: agrimar/templates/account.html:14
 msgid "Account infos"
-msgstr "Infos du compte"
+msgstr "معلومات الحساب"
 
 #: agrimar/templates/chat_history.html:12
 msgid "You have no recent conversations"
-msgstr "Vous n'avez pas de conversations récentes"
+msgstr "ليس لديك محادثات حديثة"
 
 #: agrimar/templates/chat_history.html:34
 msgid "Select a chat to view"
-msgstr "Sélectionnez un chat à afficher"
+msgstr "حدد محادثة لعرضها"
 
 #: agrimar/templates/home.html:84
 msgid "AgriMar"
-msgstr "AgriMar"
+msgstr "أڭ‍ريمار"
 
 #: agrimar/templates/home.html:85
 msgid "Your Friendly Agriculture Assistant"
-msgstr "Votre assistant agricole amical"
+msgstr "مساعد الزراعة الودود الخاص بك"
 
 #: agrimar/templates/home.html:92
 msgid "Type your message..."
-msgstr "Tapez votre message..."
+msgstr "اكتب رسالتك..."
 
 #: agrimar/templates/home.html:97
 msgid "Create FREE account to keep conversation history"
-msgstr "Créez un compte GRATUIT pour conserver l'historique des conversations"
+msgstr "أنشئ حسابًا مجانيًا للحفاظ على سجل المحادثات"
 
 #: agrimar/templates/home.html:105
 msgid "Choose Location"
-msgstr "Choisissez l'emplacement"
+msgstr "اختر الموقع"
 
 #: agrimar/templates/home.html:114 agrimar/templates/home.html:124
 msgid "Latitude"
-msgstr "Latitude"
+msgstr "خط العرض"
 
 #: agrimar/templates/home.html:116 agrimar/templates/home.html:125
 msgid "Longitude"
-msgstr "Longitude"
+msgstr "خط الطول"
 
 #: agrimar/templates/home.html:118 agrimar/templates/home.html:356
 msgid "Submit"
-msgstr "Soumettre"
+msgstr "إرسال"
 
 #: agrimar/templates/home.html:126
 msgid "City / Town / Village"
-msgstr "Ville / Commune / Village"
+msgstr "المدينة / البلدة / القرية"
 
 #: agrimar/templates/home.html:127
 msgid "Region / State"
-msgstr "Région / État"
+msgstr "المنطقة / الولاية"
 
 #: agrimar/templates/home.html:128
 msgid "Country"
-msgstr "Pays"
+msgstr "البلد"
 
 #: agrimar/templates/home.html:133
 msgid ""
 "Insert location for precised AI response (Soil properties + Weather "
 "forecast)"
 msgstr ""
-"Insérez l'emplacement pour une réponse précise de l'IA (Propriétés du sol"
-" + Prévisions météorologiques)"
+"أدخل الموقع للحصول على استجابة صحيحة دقيقة من الذكاء الاصطناعي (خصائص "
+"التربة + توقعات الطقس)"
 
 #: agrimar/templates/home.html:258
 msgid "About AGRIMAR"
-msgstr "À propos d'AGRIMAR"
+msgstr "حول أڭ‍ريمار"
 
 #: agrimar/templates/home.html:258
 msgid "Farm and company"
-msgstr "Ferme et entreprise"
+msgstr "المزرعة والشركة"
 
 #: agrimar/templates/home.html:260
-#, fuzzy
 msgid ""
 "Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is "
 "designed to provide farmers and agriculture enthusiasts with vital "
@@ -285,30 +263,29 @@ msgid ""
 " simple to use, and accessible to everyone. Get the information you need "
 "to make informed decisions and optimize your farming practices with ease."
 msgstr ""
-"Bienvenue chez AgriMar, votre assistant agricole amical. Notre chatbot "
-"est conçu pour fournir aux agriculteurs et aux passionnés d'agriculture "
-"des informations essentielles adaptées à leurs emplacements spécifiques. "
-"Que vous ayez besoin de prévisions météorologiques à jour, de données "
-"détaillées sur le sol ou d'autres informations agricoles, AgriMar vous "
-"couvre. Notre service est gratuit, simple à utiliser et accessible à "
-"tous. Obtenez les informations nécessaires pour prendre des décisions "
-"informées et optimiser vos pratiques agricoles en toute simplicité."
+"مرحبًا بك في أڭ‍ريمار، مساعد الزراعة الودود الخاص بك. تم تصميم الروبوت "
+"الدردشة لدينا لتزويد المزارعين وهواة الزراعة بمعلومات حيوية مصممة خصيصًا "
+"لمواقعهم الخاصة. سواء كنت بحاجة إلى توقعات جوية حديثة، أو بيانات تربة "
+"مفصلة، أو غيرها من النصائح الزراعية\n"
+" أڭ‍ريمار لديها ما تحتاج إليه. خدمتنا مجانية وسهلة الاستخدام ومتاحة "
+"للجميع. احصل على المعلومات التي تحتاجها لاتخاذ قرارات مستنيرة وتحسين "
+"ممارسات الزراعة بسهولة."
 
 #: agrimar/templates/home.html:263
 msgid "Read More"
-msgstr "Lire la suite"
+msgstr "اقرأ المزيد"
 
 #: agrimar/templates/home.html:283 agrimar/templates/layout.html:19
 msgid "AGRIMAR"
-msgstr "AGRIMAR"
+msgstr "أڭ‍ريمار"
 
 #: agrimar/templates/home.html:283
 msgid "REPORT"
-msgstr "RAPPORT"
+msgstr "تقرير"
 
 #: agrimar/templates/home.html:293
 msgid "Weather data"
-msgstr "Données météorologiques"
+msgstr "بيانات الطقس"
 
 #: agrimar/templates/home.html:295
 msgid ""
@@ -316,13 +293,12 @@ msgid ""
 " temperature, precipitation, wind speed, humidity, atmospheric pressure, "
 "and more."
 msgstr ""
-"Données météorologiques actuelles mondiales détaillées et prévisions "
-"météorologiques. Cela inclut la température, les précipitations, la "
-"vitesse du vent, l'humidité, la pression atmosphérique, et plus encore."
+"بيانات جوية دقيقة عالمية حالية وتوقعات جوية. وتشمل ذلك درجة الحرارة، "
+"وكمية الأمطار، وسرعة الرياح، والرطوبة، والضغط الجوي، والمزيد."
 
 #: agrimar/templates/home.html:300
 msgid "Soil data"
-msgstr "Données sur le sol"
+msgstr "بيانات التربة"
 
 #: agrimar/templates/home.html:302
 msgid ""
@@ -330,34 +306,34 @@ msgid ""
 "properties, such as soil organic carbon, pH, soil texture (sand, silt, "
 "clay), bulk density, cation exchange capacity, and more."
 msgstr ""
-"Informations mondiales sur le sol fournies par l'ISRIC, contenant "
-"diverses propriétés du sol, telles que le carbone organique du sol, le "
-"pH, la texture du sol (sable, limon, argile), la densité apparente, la "
-"capacité d'échange cationique, et plus encore."
+"معلومات تربية عالمية مقدمة من المركز الدولي لمراجع ومعلومات التربة، تحتوي"
+" على خصائص تربية متنوعة مثل الكربون العضوي في التربة، ودرجة الحموضة ، "
+"وقوام التربة (رمل، وطمي، وطين)، وكثافة التربة، وقدرة التبادل الكاتيوني، "
+"والمزيد."
 
 #: agrimar/templates/home.html:307
 msgid "NDVI indicator"
-msgstr "Indicateur NDVI"
+msgstr "مؤشر الفرق الطبيعي للغطاء النباتي"
 
 #: agrimar/templates/home.html:309
 msgid ""
 "The Normalized Difference Vegetation Index (NDVI) measures vegetation "
 "health using satellite data."
 msgstr ""
-"L'indice de végétation par différence normalisée (NDVI) mesure la santé "
-"de la végétation à partir de données satellitaires."
+"مؤشر الفرق الطبيعي للغطاء النباتي , يقيس صحة النباتات باستخدام "
+"بيانات الأقمار الصناعية."
 
 #: agrimar/templates/home.html:314
 msgid "Download Report"
-msgstr "Télécharger le rapport"
+msgstr "تحميل التقرير"
 
 #: agrimar/templates/home.html:315
 msgid ""
 "the data based on coords and may take time to generate the report (up to "
 "5mins)"
 msgstr ""
-"les données sont basées sur les coordonnées et peuvent prendre du temps "
-"pour générer le rapport (jusqu'à 5 minutes)"
+"البيانات تعتمد على الإحداثيات وقد تستغرق وقتًا لإنشاء التقرير (يصل إلى 5 "
+"دقائق)"
 
 #: agrimar/templates/home.html:335
 msgid ""
@@ -365,25 +341,25 @@ msgid ""
 "Openweather, OpenStreetMap, and SoilGrids. It aims to provide the best "
 "agricultural information to users."
 msgstr ""
-"Un projet de Salih El Mehdi & Ouzat Soumia, propulsé par Chat GPT-4, "
-"Openweather, OpenStreetMap et SoilGrids. Il vise à fournir les meilleures"
-" informations agricoles aux utilisateurs."
+"مشروع من تأليف صالح المهدي و أوزات سمية، مدعوم بواسطة Chat GPT-4، "
+"Openweather، OpenStreetMap، و SoilGrids. يهدف إلى تقديم أفضل معلومات "
+"زراعية للمستخدمين."
 
 #: agrimar/templates/home.html:340
 msgid "Quick links"
-msgstr "Liens rapides"
+msgstr "روابط سريعة"
 
 #: agrimar/templates/home.html:342
 msgid "Join Us"
-msgstr "Rejoignez-nous"
+msgstr "انضم إلينا"
 
 #: agrimar/templates/home.html:343
 msgid "Maintenance"
-msgstr "Maintenance"
+msgstr "صيانة"
 
 #: agrimar/templates/home.html:344
 msgid "Language Packs"
-msgstr "Packs linguistiques"
+msgstr "حزم اللغات"
 
 #: agrimar/templates/home.html:345
 msgid "LearnPress"
@@ -391,128 +367,119 @@ msgstr "LearnPress"
 
 #: agrimar/templates/home.html:346
 msgid "Release Status"
-msgstr "Statut de la version"
+msgstr "حالة الإصدار"
 
 #: agrimar/templates/home.html:353
 msgid "Subscribe email"
-msgstr "S'abonner par email"
+msgstr "الاشتراك بالبريد الإلكتروني"
 
 #: agrimar/templates/home.html:354
 msgid ""
 "Enter your email below to get the latest updates, join our AGRIMAR "
 "community!"
 msgstr ""
-"Entrez votre email ci-dessous pour recevoir les dernières mises à jour et"
-" rejoindre notre communauté AGRIMAR!"
+"أدخل بريدك الإلكتروني أدناه للحصول على آخر التحديثات، وانضم إلى مجتمعنا "
+"في أڭ‍ريمار!"
 
 #: agrimar/templates/home.html:355
 msgid "Your Email"
-msgstr "Votre Email"
+msgstr "بريدك الإلكتروني"
 
 #: agrimar/templates/home.html:362 agrimar/templates/layout.html:37
 msgid "Contact Us"
-msgstr "Contactez-nous"
+msgstr "اتصل بنا"
 
 #: agrimar/templates/home.html:366
 msgid "Campus Mghilla, BP 523, 23000 Béni Mellal"
-msgstr "Campus Mghilla, BP 523, 23000 Béni Mellal"
+msgstr "الحرم الجامعي مغيلة، ص.ب. 523، 23000 بني ملال"
 
 #: agrimar/templates/home.html:383
 msgid "All Rights Reserved."
-msgstr "Tous droits réservés."
+msgstr "جميع الحقوق محفوظة."
 
 #: agrimar/templates/layout.html:17
 msgid "AGRIMAR -"
-msgstr "AGRIMAR -"
+msgstr "أڭ‍ريمار -"
 
 #: agrimar/templates/layout.html:26
 msgid "Toggle navigation"
-msgstr "Basculer la navigation"
+msgstr "تبديل الملاحة"
 
 #: agrimar/templates/layout.html:31
 msgid "Your Logo"
-msgstr "Votre Logo"
+msgstr "شعارك"
 
 #: agrimar/templates/layout.html:34
 msgid "Home"
-msgstr "Accueil"
+msgstr "الصفحة الرئيسية"
 
 #: agrimar/templates/layout.html:35
 msgid "About"
-msgstr "À propos"
+msgstr "حول"
 
 #: agrimar/templates/layout.html:36
 msgid "More"
-msgstr "Plus"
+msgstr "المزيد"
 
 #: agrimar/templates/layout.html:47
 msgid "Logout"
-msgstr "Déconnexion"
+msgstr "تسجيل الخروج"
 
 #: agrimar/templates/login.html:8 agrimar/templates/register.html:56
 msgid "Log In"
-msgstr "Connexion"
+msgstr "تسجيل الدخول"
 
 #: agrimar/templates/login.html:34
 msgid "Forgot password ?"
-msgstr "Mot de passe oublié ?"
+msgstr "نسيت كلمة المرور؟"
 
 #: agrimar/templates/login.html:41
 msgid "Don't Have An Account?"
-msgstr "Vous n'avez pas de compte?"
+msgstr "ليس لديك حساب؟"
 
 #: agrimar/templates/login.html:41
 msgid "Sign Up Now"
-msgstr "Inscrivez-vous maintenant"
+msgstr "سجل الآن"
 
 #: agrimar/templates/register.html:9
 msgid "Join Our Community Today!"
-msgstr "Rejoignez notre communauté dès aujourd'hui!"
+msgstr "انضم إلى مجتمعنا اليوم!"
 
 #: agrimar/templates/register.html:56
 msgid "Already Have An Account?"
-msgstr "Vous avez déjà un compte?"
+msgstr "هل لديك حساب بالفعل؟"
 
 #: agrimar/templates/reset_request.html:8 agrimar/templates/reset_token.html:8
 msgid "Reset Password"
-msgstr "Réinitialiser le mot de passe"
+msgstr "إعادة تعيين كلمة المرور"
 
 #: agrimar/templates/users.html:8
 msgid "Username"
-msgstr "Nom d'utilisateur"
+msgstr "اسم المستخدم"
 
 #: agrimar/templates/users.html:9
 msgid "Email"
-msgstr "Email"
+msgstr "البريد الإلكتروني"
 
 #: agrimar/templates/users.html:10
 msgid " Account Creation Date "
-msgstr "Date de création du compte"
+msgstr "تاريخ إنشاء الحساب"
 
 #: agrimar/templates/users.html:11
 msgid " Actions "
-msgstr "Actions"
+msgstr "خيارات"
 
 #: agrimar/templates/users.html:21
 msgid " Are you sure you want to delete this user "
-msgstr "Êtes-vous sûr de vouloir supprimer cet utilisateur"
+msgstr "هل أنت متأكد أنك تريد حذف هذا المستخدم"
 
 #: agrimar/templates/users.html:23
 msgid " Delete "
-msgstr "Supprimer"
-
-#~ msgid ""
-#~ "consectetur adipiscing elit, sed do "
-#~ "eiusmodmpor incididunt ut labore et "
-#~ "dolore magna"
-#~ msgstr ""
-#~ "consectetur adipiscing elit, sed do "
-#~ "eiusmod tempor incididunt ut labore et"
-#~ " dolore magna"
+msgstr "حذف"
 
 #~ msgid "Are you sure you want to delete this user"
 #~ msgstr ""
 
 #~ msgid "Delete"
-#~ msgstr ""
+#~ msgstr "حذف"
 
