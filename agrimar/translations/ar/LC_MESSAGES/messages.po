@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-25 05:03+0100\n"
+"POT-Creation-Date: 2024-06-02 21:19+0100\n"
 "PO-Revision-Date: 2024-05-25 03:16+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -320,8 +320,8 @@ msgid ""
 "The Normalized Difference Vegetation Index (NDVI) measures vegetation "
 "health using satellite data."
 msgstr ""
-"مؤشر الفرق الطبيعي للغطاء النباتي , يقيس صحة النباتات باستخدام "
-"بيانات الأقمار الصناعية."
+"مؤشر الفرق الطبيعي للغطاء النباتي , يقيس صحة النباتات باستخدام بيانات "
+"الأقمار الصناعية."
 
 #: agrimar/templates/home.html:314
 msgid "Download Report"
@@ -425,19 +425,19 @@ msgstr "المزيد"
 msgid "Logout"
 msgstr "تسجيل الخروج"
 
-#: agrimar/templates/login.html:8 agrimar/templates/register.html:56
+#: agrimar/templates/login.html:10 agrimar/templates/register.html:56
 msgid "Log In"
 msgstr "تسجيل الدخول"
 
-#: agrimar/templates/login.html:34
+#: agrimar/templates/login.html:36
 msgid "Forgot password ?"
 msgstr "نسيت كلمة المرور؟"
 
-#: agrimar/templates/login.html:41
+#: agrimar/templates/login.html:43
 msgid "Don't Have An Account?"
 msgstr "ليس لديك حساب؟"
 
-#: agrimar/templates/login.html:41
+#: agrimar/templates/login.html:43
 msgid "Sign Up Now"
 msgstr "سجل الآن"
 
@@ -476,10 +476,3 @@ msgstr "هل أنت متأكد أنك تريد حذف هذا المستخدم"
 #: agrimar/templates/users.html:23
 msgid " Delete "
 msgstr "حذف"
-
-#~ msgid "Are you sure you want to delete this user"
-#~ msgstr ""
-
-#~ msgid "Delete"
-#~ msgstr "حذف"
-

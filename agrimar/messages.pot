@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-05-25 05:03+0100\n"
+"POT-Creation-Date: 2024-06-02 21:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,27 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.14.0\n"
-
-#: agrimar/forms.py:20 agrimar/forms.py:51
-msgid " Username "
-msgstr ""
-
-#: agrimar/forms.py:21 agrimar/forms.py:38 agrimar/forms.py:52
-#: agrimar/forms.py:69
-msgid " Email "
-msgstr ""
-
-#: agrimar/forms.py:22 agrimar/forms.py:39 agrimar/forms.py:78
-msgid " Password "
-msgstr ""
-
-#: agrimar/forms.py:23 agrimar/forms.py:79
-msgid " Confirm Password "
-msgstr ""
-
-#: agrimar/forms.py:24
-msgid " Sign Up "
-msgstr ""
 
 #: agrimar/forms.py:29 agrimar/forms.py:60
 msgid " That username is taken, please choose another one "
@@ -46,44 +25,8 @@ msgstr ""
 msgid " That email is taken, please choose another one "
 msgstr ""
 
-#: agrimar/forms.py:40
-msgid " Remember Me "
-msgstr ""
-
-#: agrimar/forms.py:41
-msgid " Login "
-msgstr ""
-
-#: agrimar/forms.py:45
-msgid " Latitude "
-msgstr ""
-
-#: agrimar/forms.py:46
-msgid " Longitude "
-msgstr ""
-
-#: agrimar/forms.py:47
-msgid " Submit "
-msgstr ""
-
-#: agrimar/forms.py:53
-msgid " Update Profile Picture "
-msgstr ""
-
-#: agrimar/forms.py:54
-msgid " Update "
-msgstr ""
-
-#: agrimar/forms.py:70
-msgid " Request Password Reset "
-msgstr ""
-
 #: agrimar/forms.py:75
 msgid " There is no account with that email. You should register first "
-msgstr ""
-
-#: agrimar/forms.py:80
-msgid " Reset Password "
 msgstr ""
 
 #: agrimar/routes.py:92 agrimar/templates/layout.html:43
@@ -135,17 +78,6 @@ msgstr ""
 
 #: agrimar/routes.py:208 agrimar/templates/layout.html:46
 msgid "Account"
-msgstr ""
-
-#: agrimar/routes.py:222
-msgid ""
-"Subject: Password Reset Request\n"
-"\n"
-"To reset your password, visit the following link:\n"
-"{reset_link}\n"
-"\n"
-"If you did not make this request, then simply ignore this email and no "
-"changes will be made.\n"
 msgstr ""
 
 #: agrimar/routes.py:240
@@ -390,19 +322,19 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: agrimar/templates/login.html:8 agrimar/templates/register.html:56
+#: agrimar/templates/login.html:10 agrimar/templates/register.html:56
 msgid "Log In"
 msgstr ""
 
-#: agrimar/templates/login.html:34
+#: agrimar/templates/login.html:36
 msgid "Forgot password ?"
 msgstr ""
 
-#: agrimar/templates/login.html:41
+#: agrimar/templates/login.html:43
 msgid "Don't Have An Account?"
 msgstr ""
 
-#: agrimar/templates/login.html:41
+#: agrimar/templates/login.html:43
 msgid "Sign Up Now"
 msgstr ""
 

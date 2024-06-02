@@ -6,11 +6,51 @@ html {
 }
 
 body {
+  margin-top: 5rem;
+  font-family: "Poppins", sans-serif;
+  /* old background
   background: rgb(44, 47, 59);
   background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43));
   background: linear-gradient(to right, rgb(49, 165, 253), rgb(50, 55, 65), rgb(33, 33, 78));
-  margin-top: 5rem;
-  font-family: "Poppins", sans-serif;
+  */
+
+  /* blue to light blue
+  background: rgb(0, 102, 204);
+  background: -webkit-linear-gradient(to right, rgb(0, 102, 204), rgb(173, 216, 230));
+  background: linear-gradient(to right, rgb(0, 102, 204), rgb(173, 216, 230));
+  */
+
+  /* blue purple blue gray
+  background: rgb(44, 47, 59);
+  background: -webkit-linear-gradient(to right, rgb(49, 165, 253), rgb(129, 77, 207), rgb(49, 165, 253), rgb(128, 128, 128));
+  background: linear-gradient(to right, rgb(49, 165, 253), rgb(129, 77, 207), rgb(49, 165, 253), rgb(128, 128, 128));
+  */
+
+  /* darker blue
+  background-image: -webkit-linear-gradient(90deg, #051367,#5D8BF4);
+  background-image: linear-gradient(90deg, #051367,#5D8BF4);
+  */
+
+  background-image: -webkit-linear-gradient(90deg, #313552, #219f94);
+  background-image: linear-gradient(90deg, #313552, #219f94);
+
+  /* animated gradient
+  overflow: auto;
+    background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+    background-attachment: fixed;
+  }
+  @keyframes gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    } */
 }
 
 [lang="ar"] body {
@@ -39,7 +79,8 @@ h6 {
 
 /* Navbar color */
 .bg-steel {
-  background-color: #425063;
+  background: transparent;
+  backdrop-filter: blur(10px);
 }
 
 /* Navbar styles */
@@ -180,7 +221,7 @@ h6 {
 }
 
 .user_info span {
-  font-size: 16px;
+  font-size: 20px;
   color: white;
   font-weight: 600;
 }
@@ -243,7 +284,7 @@ h6 {
 
 .chat-history h2 {
   text-align: center;
-  color: #888;
+  color: whitesmoke;
 }
 
 .chat-history ul {
@@ -477,7 +518,8 @@ h6 {
 /** end offer **/
 /* footer */
 .footer {
-  background: #425063;
+  background: transparent;
+  backdrop-filter: blur(10px);
   padding: 55px 0px;
 }
 

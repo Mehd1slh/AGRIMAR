@@ -17,11 +17,11 @@ def inject_locale():
     return {'get_locale': get_locale}
 
 class RegistrationForm(FlaskForm):
-    username = StringField(_(' Username '), validators=[DataRequired(), Length(min=3, max=20)])
-    email = StringField(_(' Email '), validators=[DataRequired(), Email()])
-    mdp = PasswordField(_(' Password '), validators=[DataRequired(), Length(min=6, max=15)])
-    con_mdp = PasswordField(_(' Confirm Password '), validators=[DataRequired(), Length(min=6, max=15), EqualTo('mdp')])
-    submit = SubmitField(_(' Sign Up '))
+    username = StringField(_l(' Username '), validators=[DataRequired(), Length(min=3, max=20)])
+    email = StringField(_l(' Email '), validators=[DataRequired(), Email()])
+    mdp = PasswordField(_l(' Password '), validators=[DataRequired(), Length(min=6, max=15)])
+    con_mdp = PasswordField(_l(' Confirm Password '), validators=[DataRequired(), Length(min=6, max=15), EqualTo('mdp')])
+    submit = SubmitField(_l(' Sign Up '))
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -35,23 +35,23 @@ class RegistrationForm(FlaskForm):
     
 
 class LoginForm(FlaskForm):
-    email = StringField(_(' Email '), validators=[DataRequired(), Email()])
-    mdp = PasswordField(_(' Password '), validators=[DataRequired(), Length(min=6, max=15)])
-    remember = BooleanField(_(' Remember Me '))
-    submit = SubmitField(_(' Login '))
+    email = StringField(_l(' Email '), validators=[DataRequired(), Email()])
+    mdp = PasswordField(_l(' Password '), validators=[DataRequired(), Length(min=6, max=15)])
+    remember = BooleanField(_l(' Remember Me '))
+    submit = SubmitField(_l(' Login '))
 
 
 class MapForm(FlaskForm):
-    lat = FloatField(_(' Latitude '), validators=[DataRequired()])
-    lon = FloatField(_(' Longitude '), validators=[DataRequired()])
-    submit = SubmitField(_(' Submit '))
+    lat = FloatField(_l(' Latitude '), validators=[DataRequired()])
+    lon = FloatField(_l(' Longitude '), validators=[DataRequired()])
+    submit = SubmitField(_l(' Submit '))
     
 
 class UpdateAccountForm(FlaskForm):
-    username = StringField(_(' Username '), validators=[DataRequired(), Length(min=3, max=20)])
-    email = StringField(_(' Email '), validators=[DataRequired(), Email()])
-    picture = FileField(_(' Update Profile Picture '), validators=[FileAllowed(['jpg', 'png', 'jpeg', 'jfif'])])
-    submit = SubmitField(_(' Update '))
+    username = StringField(_l(' Username '), validators=[DataRequired(), Length(min=3, max=20)])
+    email = StringField(_l(' Email '), validators=[DataRequired(), Email()])
+    picture = FileField(_l(' Update Profile Picture '), validators=[FileAllowed(['jpg', 'png', 'jpeg', 'jfif'])])
+    submit = SubmitField(_l(' Update '))
 
     def validate_username(self, username):
         if username.data != current_user.username:
@@ -66,8 +66,8 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError(_(' That email is taken, please choose another one '))
             
 class RequestResetForm(FlaskForm):
-    email = StringField(_(' Email '), validators=[DataRequired(), Email()])
-    submit = SubmitField(_(' Request Password Reset '))
+    email = StringField(_l(' Email '), validators=[DataRequired(), Email()])
+    submit = SubmitField(_l(' Request Password Reset '))
 
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
@@ -75,6 +75,6 @@ class RequestResetForm(FlaskForm):
             raise ValidationError(_(' There is no account with that email. You should register first '))
     
 class ResetPasswordForm(FlaskForm):
-    mdp = PasswordField(_(' Password '), validators=[DataRequired(), Length(min=6, max=15)])
-    con_mdp = PasswordField(_(' Confirm Password '), validators=[DataRequired(), Length(min=6, max=15), EqualTo('mdp')])
-    submit = SubmitField(_(' Reset Password '))
+    mdp = PasswordField(_l(' Password '), validators=[DataRequired(), Length(min=6, max=15)])
+    con_mdp = PasswordField(_l(' Confirm Password '), validators=[DataRequired(), Length(min=6, max=15), EqualTo('mdp')])
+    submit = SubmitField(_l(' Reset Password '))

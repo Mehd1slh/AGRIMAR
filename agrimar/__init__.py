@@ -27,13 +27,13 @@ def get_timezone():
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '092b93416967f9fec0c22c76420ed834'
-babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
+
 # Configuring Babel
+babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
 
 
-app.app_context()
 host = "localhost"
 user = "root"
 password = "mehdi1301"
