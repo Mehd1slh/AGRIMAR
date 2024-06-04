@@ -67,6 +67,10 @@ body {
   width: 100%;
 }
 
+.min-vh-100 {
+  min-height: 90vh;
+}
+
 /* Heading styles */
 h1,
 h2,
@@ -141,8 +145,8 @@ h6 {
   height: auto;
   width: 100%;
   border-radius: 15px !important;
-  background-color: rgba(0, 0, 0, 0.4) !important;
-  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.24) !important;
+  margin-top: 50px;
 }
 
 /* Ensure responsiveness for smaller screens */
@@ -518,8 +522,7 @@ h6 {
 /** end offer **/
 /* footer */
 .footer {
-  background: transparent;
-  backdrop-filter: blur(10px);
+  background-color: #5f788a;
   padding: 55px 0px;
 }
 
@@ -554,7 +557,7 @@ ul.Links_footer li a {
   margin-top: -34px;
 }
 ul.Links_footer li a:hover {
-  color: #30880d;
+  color: #4cbd1f;
 }
 ul.Links_footer li {
   padding-bottom: 15px;

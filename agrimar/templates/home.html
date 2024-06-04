@@ -69,7 +69,7 @@
 
 <body>
   <div id="blur-overlay"></div>
-  <div class="container">
+  <div class="container min-vh-100">
     <div class="row justify-content-center align-items-start">
       <!-- Chatbot UI conversation box-->
       <div class="col-md-8">
@@ -81,7 +81,7 @@
                 <span class="online_icon"></span>
               </div>
               <div class="user_info">
-                <span >{{ _('AgriMar') }}</span>
+                <span>{{ _('AgriMar') }}</span>
                 <p>{{ _('Your Friendly Agriculture Assistant') }}</p>
               </div>
             </div>
@@ -254,7 +254,7 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
-          <div class="about_box">
+          <div class="about_box" data-aos="fade-right">
             <h2>{{ _('About AGRIMAR') }}<br /><strong class="black">{{ _('Farm and company') }}</strong></h2>
             <p>
               {{ _('Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is designed to provide farmers and agriculture enthusiasts with vital information tailored to their specific locations. Whether you need up-to-date weather forecasts, detailed soil data, or other agricultural
@@ -264,7 +264,7 @@
           </div>
         </div>
         <div class="col-xl-7 col-lg-7 col-md-7 co-sm-l2">
-          <div class="about_img">
+          <div class="about_img" data-aos="fade-left">
             <figure><div id="about-animation"></div></figure>
           </div>
         </div>
@@ -291,22 +291,22 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
             <div class="offer_box">
               <h3>{{ _('Weather data') }}</h3>
-              <figure><div id="weather-animation" class="lottie-container"></div></figure>
-              <p>{{ _('Detailed global current weather data and weather forecasts. This includes temperature, precipitation, wind speed, humidity, atmospheric pressure, and more.') }}</p>
+              <figure><div id="weather-animation" class="lottie-container" data-aos="zoom-in"></div></figure>
+              <p data-aos="fade-up">{{ _('Detailed global current weather data and weather forecasts. This includes temperature, precipitation, wind speed, humidity, atmospheric pressure, and more.') }}</p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin_ttt">
             <div class="offer_box">
               <h3>{{ _('Soil data') }}</h3>
-              <figure><div id="soil-animation" class="lottie-container"></div></figure>
-              <p>{{ _('Global soil informations provided by ISRIC, contains various soil properties, such as soil organic carbon, pH, soil texture (sand, silt, clay), bulk density, cation exchange capacity, and more.') }}</p>
+              <figure><div id="soil-animation" class="lottie-container" data-aos="zoom-in"></div></figure>
+              <p data-aos="fade-up">{{ _('Global soil informations provided by ISRIC, contains various soil properties, such as soil organic carbon, pH, soil texture (sand, silt, clay), bulk density, cation exchange capacity, and more.') }}</p>
             </div>
           </div>
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk">
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk" data-aos="zoom-in">
             <div class="offer_box">
               <h3>{{ _('NDVI indicator') }}</h3>
-              <figure><div id="ndvi-animation" class="lottie-container"></div></figure>
-              <p>{{ _('The Normalized Difference Vegetation Index (NDVI) measures vegetation health using satellite data.') }}</p>
+              <figure><div id="ndvi-animation" class="lottie-container" data-aos="zoom-in"></div></figure>
+              <p data-aos="fade-up">{{ _('The Normalized Difference Vegetation Index (NDVI) measures vegetation health using satellite data.') }}</p>
             </div>
           </div>
 
