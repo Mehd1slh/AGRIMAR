@@ -221,11 +221,11 @@ def send_reset_email(user):
     reset_link = url_for('reset_token', token=token, _external=True)
     msg = lazy_gettext(f'''Subject: Password Reset Request
 
-To reset your password, visit the following link:
-{reset_link}
+    To reset your password, visit the following link:
+    {reset_link}
 
-If you did not make this request, then simply ignore this email and no changes will be made.
-''')
+    If you did not make this request, then simply ignore this email and no changes will be made.
+    ''')
     server.sendmail(email_sender, email_reciever, str(msg))
     server.quit()
 

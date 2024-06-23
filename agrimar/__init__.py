@@ -35,8 +35,8 @@ app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
 
 
 host = "localhost"
-user = "root"
-password = "mehdi1301"
+user = "phpmyadmin"
+password = "12345678"
 database = "agrimar"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://' + user + ':' + password + '@' + host + '/' + database
 
