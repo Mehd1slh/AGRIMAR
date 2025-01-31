@@ -3,7 +3,7 @@ from opencage.geocoder import OpenCageGeocode
 from flask_babel import _
 
 def get_address_info_from_coords(lat, lon):
-    key = 'b54875250f1a448d91b56a8a5b6a50c1'
+    key = '608fe458adc6472f93ba626b12a1e2f1'
     geocoder = OpenCageGeocode(key)
     result = geocoder.reverse_geocode(lat, lon, language='ar')
     

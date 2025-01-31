@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_babel import Babel 
+import pymysql
 
 def get_locale():
     # Check if the language query parameter is set and valid
@@ -33,11 +34,20 @@ babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
 
+    #local mysql database
+# host = "localhost"
+# user = "root"
+# password = "Mehdi1301"
+# database = "agrimar"
 
-host = "localhost"
-user = "root"
-password = "mehdi1301"
-database = "agrimar"
+
+
+    #hosted freedb database
+host = "sql.freedb.tech"
+user = "freedb_mhido"
+password = "z5eV$7jruhgyX&S"
+database = "freedb_agrimar"
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://' + user + ':' + password + '@' + host + '/' + database
 
 # Importing SQLAlchemy with Matplotlib
