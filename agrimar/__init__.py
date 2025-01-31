@@ -37,7 +37,7 @@ app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
     #local mysql database
 # host = "localhost"
 # user = "root"
-# password = "Mehdi1301"
+# password = "mehdi1301"
 # database = "agrimar"
 
 
