@@ -1,14 +1,19 @@
-from agrimar.model import  Conversation , Message
-from agrimar.api_data import  get_address_info_from_coords , get_soil_data , get_weather_data
-from openai import OpenAI 
+import os
+from agrimar.model import Conversation, Message
+from agrimar.api_data import get_address_info_from_coords, get_soil_data, get_weather_data
+from openai import OpenAI
+from dotenv import load_dotenv
 
-chatbot = OpenAI()
+# Load environment variables from .env file
+load_dotenv('variables.env')
 
+# Initialize the OpenAI chatbot with the API key from the .env file
+openai_api_key = os.getenv('OPENAI_API_KEY')
+chatbot = OpenAI(api_key=openai_api_key)
 
-
-def CustomChatBot(user_input, lat=None, lon=None ):
+def CustomChatBot(user_input, lat=None, lon=None):
     if lat is None and lon is None:
-        prompt = "You are an agriculture expert who answers farmers' questions such as crop types, weather, and other queries to improve their cultivation. if the user asked for weather related infos or soil properties infos that you can't provide without external source of data , tell the user to insert his location on our website ."
+        prompt = "You are an agriculture expert who answers farmers' questions such as crop types, weather, and other queries to improve their cultivation. if the user asked for weather related infos or soil properties infos that you can't provide without external source of data , tell the user to insert his location on our website."
     else:
         weather_data = get_weather_data(lat, lon)
         soil_data = get_soil_data(lat, lon)
@@ -30,8 +35,6 @@ def CustomChatBot(user_input, lat=None, lon=None ):
     ChatGPT_reply = response.choices[0].message.content
     chat.append({"role": "assistant", "content": ChatGPT_reply})
     return ChatGPT_reply
-
-
 
 def generate_title(convo):
     convo = Conversation()

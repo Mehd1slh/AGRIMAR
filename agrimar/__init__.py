@@ -1,12 +1,17 @@
+import os
+from dotenv import load_dotenv
 import matplotlib
 matplotlib.use('Agg')
 
-from flask import Flask, request , session , g
+from flask import Flask, request, session, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_babel import Babel 
+from flask_babel import Babel
 import pymysql
+
+# Load environment variables from .env file
+load_dotenv('variables.env')
 
 def get_locale():
     # Check if the language query parameter is set and valid
@@ -27,28 +32,22 @@ def get_timezone():
         return user.timezone
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '092b93416967f9fec0c22c76420ed834'
+
+# Use secret key from .env
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 # Configuring Babel
 babel = Babel(app, locale_selector=get_locale, timezone_selector=get_timezone)
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
 
-    #local mysql database
-# host = "localhost"
-# user = "root"
-# password = "mehdi1301"
-# database = "agrimar"
+# Use database configuration from .env
+host = os.getenv('DB_HOST')
+user = os.getenv('DB_USER')
+password = os.getenv('DB_PASSWORD')
+database = os.getenv('DB_NAME')
 
-
-
-    #hosted freedb database
-host = "sql.freedb.tech"
-user = "freedb_mhido"
-password = "z5eV$7jruhgyX&S"
-database = "freedb_agrimar"
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://' + user + ':' + password + '@' + host + '/' + database
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{user}:{password}@{host}/{database}'
 
 # Importing SQLAlchemy with Matplotlib
 import matplotlib.pyplot as plt
@@ -59,7 +58,8 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
+# Use mail password from .env
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_PASSWORD'] = "nruj ryjk xgzj scgm"
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
 from agrimar import routes
