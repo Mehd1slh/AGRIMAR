@@ -44,7 +44,7 @@ user = os.getenv('DB_USER')
 password = os.getenv('DB_PASSWORD')
 database = os.getenv('DB_NAME')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{user}:{password}@{host}:{port}/{database}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://root:jVaerQkrmjw8LxzT7AgojcaBiQPAVYVF@dpg-cuep5mtumphs73ag0g10-a/agrimar'
 
 # Importing SQLAlchemy with Matplotlib
 import matplotlib.pyplot as plt
