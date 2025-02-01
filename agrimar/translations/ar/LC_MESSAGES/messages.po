@@ -337,11 +337,11 @@ msgstr ""
 
 #: agrimar/templates/home.html:335
 msgid ""
-"A project by Salih El Mehdi & Ouzat Soumia, powered by Chat GPT-4, "
+"A project by Salih El Mehdi & Akchouch Abdelhakim, powered by Chat GPT-4, "
 "Openweather, OpenStreetMap, and SoilGrids. It aims to provide the best "
 "agricultural information to users."
 msgstr ""
-"مشروع من تأليف صالح المهدي و أوزات سمية، مدعوم بواسطة Chat GPT-4، "
+"مشروع من تأليف صالح المهدي و عبد الحكيم اكشوش، مدعوم بواسطة Chat GPT-4، "
 "Openweather، OpenStreetMap، و SoilGrids. يهدف إلى تقديم أفضل معلومات "
 "زراعية للمستخدمين."
 
@@ -390,8 +390,8 @@ msgid "Contact Us"
 msgstr "اتصل بنا"
 
 #: agrimar/templates/home.html:366
-msgid "Campus Mghilla, BP 523, 23000 Béni Mellal"
-msgstr "الحرم الجامعي مغيلة، ص.ب. 523، 23000 بني ملال"
+msgid "Avenue des Nations Unies, Agdal, Rabat Maroc"
+msgstr "شارع الأمم المتحدة، أكدال، الرباط، المغرب"
 
 #: agrimar/templates/home.html:383
 msgid "All Rights Reserved."
