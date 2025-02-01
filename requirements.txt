@@ -44,3 +44,4 @@ python-dotenv==1.0.1
 requests==2.32.3
 SQLAlchemy==2.0.36
 WTForms==3.2.1
+psycopg2==2.9.10   # Add psycopg2 for PostgreSQL connection
