@@ -16,7 +16,7 @@ def CustomChatBot(user_input, lat=None, lon=None):
         prompt = "You are an agriculture expert who answers farmers' questions such as crop types, weather, and other queries to improve their cultivation. if the user asked for weather related infos or soil properties infos that you can't provide without external source of data , tell the user to insert his location on our website."
     else:
         weather_data = get_weather_data(lat, lon)
-        soil_data = get_soil_data(lat, lon)
+        soil_data = 'null'#get_soil_data(lat, lon)
         address = get_address_info_from_coords(lat, lon)
         prompt = f"""
         Based on the following data:
