@@ -1,9 +1,14 @@
+import os
 import requests as r
 from opencage.geocoder import OpenCageGeocode
 from flask_babel import _
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv('variables.env')
 
 def get_address_info_from_coords(lat, lon):
-    key = 'b54875250f1a448d91b56a8a5b6a50c1'
+    key = os.getenv('OPENCAGE_API_KEY')  # Fetch OpenCage API key from .env
     geocoder = OpenCageGeocode(key)
     result = geocoder.reverse_geocode(lat, lon, language='ar')
     
@@ -21,9 +26,9 @@ def get_address_info_from_coords(lat, lon):
         }
     return None
 
-def get_weather_data(lat , lon , format="optimized"):
-    weather_key = "65c19ff251fedc2e059c2fbfed70adfa"
-    if format == "full" :
+def get_weather_data(lat, lon, format="optimized"):
+    weather_key = os.getenv('WEATHER_API_KEY')  # Fetch OpenWeatherMap API key from .env
+    if format == "full":
         weather_url = (f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&lang=fr&appid={weather_key}&units=metric")
     else:
         weather_url = (f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&lang=fr&exclude=minutely,hourly&appid={weather_key}&units=metric")
@@ -32,7 +37,7 @@ def get_weather_data(lat , lon , format="optimized"):
         raise Exception(_(f"Failed to fetch weather data: {response.status_code}"))
     return response.json()
 
-def get_soil_data(lat, lon , format="optimized"):
+def get_soil_data(lat, lon, format="optimized"):
     if format == "full":
         url = (f"https://rest.isric.org/soilgrids/v2.0/properties/query?lon={lon}&lat={lat}&"
             f"property=bdod&property=cec&property=cfvo&property=clay&property=nitrogen&"

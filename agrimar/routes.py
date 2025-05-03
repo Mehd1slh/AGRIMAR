@@ -264,17 +264,17 @@ def reset_token(token):
 def download_report():
     if 'lat' in session.keys() and 'lon' in session.keys() and session.get('lat') and session.get('lon'):
 
-        full_soil_data = get_soil_data(session.get('lat'),session.get('lon'),"full")
+        #full_soil_data = get_soil_data(session.get('lat'),session.get('lon'),"full")
         full_weather_data = get_weather_data(session.get('lat'),session.get('lon'),"full")
 
-        layers = full_soil_data["properties"]["layers"]
+        #layers = full_soil_data["properties"]["layers"]
         daily_weather_data = full_weather_data['daily']
         dates = [datetime.fromtimestamp(day['dt']).date().isoformat() for day in daily_weather_data]
         temps = [day['temp']['day'] for day in daily_weather_data] 
         humidity = [day['humidity'] for day in daily_weather_data]
         uvi = [day['uvi'] for day in daily_weather_data]
         wind_speed = [day['wind_speed'] for day in daily_weather_data]
-        num_layers = len(layers)
+        #num_layers = len(layers)
 
         pdf.add_first_page("agrimar/static/AGRIMAR 2.png" , "Rapport de données agricoles")
         title = "Rapport Météorologique"
@@ -322,16 +322,16 @@ def download_report():
         CEC(Capacité d'échange cationique) : Représente la capacité totale du sol à retenir des cations échangeables, influençant la disponibilité des nutriments.
         BDOD(Densité apparente du sol) : Mesure la masse de sol par unité de volume, influençant la porosité du sol et la croissance des racines.
             '''
-        pdf.add_second_page(title, paragraph , property_descriptions)
-        for i in range(0, num_layers, 2):  # 2 graphs per page (1x2 grid)
-            pdf.add_page()
-            for j, layer in enumerate(layers[i:i + 2]):
-                file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
-                create_soil_graph(layer, file_name)
-                pdf.set_font("Arial", size=12)
-                pdf.image(file_name, x=10, y=None , w=190)           
-                # Adjust the y-coordinate to leave space for the title
-                pdf.set_y(150)
+        # pdf.add_second_page(title, paragraph , property_descriptions)
+        # for i in range(0, num_layers, 2):  # 2 graphs per page (1x2 grid)
+        #     pdf.add_page()
+        #     for j, layer in enumerate(layers[i:i + 2]):
+        #         file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
+        #         create_soil_graph(layer, file_name)
+        #         pdf.set_font("Arial", size=12)
+        #         pdf.image(file_name, x=10, y=None , w=190)           
+        #         # Adjust the y-coordinate to leave space for the title
+        #         pdf.set_y(150)
 
 
         # Save the PDF
