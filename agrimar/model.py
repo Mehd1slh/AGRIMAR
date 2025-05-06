@@ -113,7 +113,9 @@ class PDF(FPDF):
         self.multi_cell(0, 10, paragraph)
         self.ln(5)  # Add some space below the title
         self.multi_cell(0, 8, property_descriptions)
+    
+    def get_first_page_text():
+        return "Rapport de données agricoles"
 
-
-
-
+    def get_second_page_text():
+        return "Ce rapport fournit une analyse des données météorologiques et des sols..."

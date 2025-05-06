@@ -1,10 +1,11 @@
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 from flask import render_template, redirect, url_for, flash, send_file, request, session, json
-from agrimar.chat import CustomChatBot, generate_title
-from agrimar.api_data import get_address_info_from_coords, get_soil_data, get_weather_data
+from agrimar.chat import CustomChatBot, generate_title , prepare_prompt
+from agrimar.api_data import get_address_info_from_coords, get_soil_data, get_weather_data ,format_soil_summary , format_weather_summary
 from agrimar.forms import RegistrationForm, LoginForm, MapForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from agrimar.model import User, Conversation, Message, PDF
-from agrimar.report import create_soil_graph, create_weather_graphs
+from agrimar.report import add_weather_properties_pages ,add_soil_report_pages
 from agrimar import app, db, bcrypt , get_locale , babel
 from flask_login import login_user, logout_user, login_required, current_user
 from PIL import Image
@@ -12,6 +13,19 @@ import secrets, os, smtplib
 from flask_babel import Babel, _,lazy_gettext 
 
 pdf = PDF()
+
+# ✅ global temporary store
+full_soil_data_store = {}
+def fetch_full_soil_data_async(lat, lon, user_id):
+    from agrimar.api_data import get_soil_data
+    try:
+        full_soil_data = get_soil_data(lat, lon, format="full")
+        full_soil_data_store[user_id] = full_soil_data
+        print(f"[INFO] Full soil data fetched for user {user_id}")
+    except Exception as e:
+        print(f"[ERROR] Full soil data fetch failed for user {user_id}: {e}")
+
+
 @app.route('/setlang')
 def setlang():
     lang = request.args.get('lang', 'en')
@@ -41,11 +55,40 @@ def home():
         session['lat'] = request.form.get("latitude")
         session['lon'] = request.form.get("longitude")
         if session['lat'] and session['lon']:
-            address_info = get_address_info_from_coords(session['lat'], session['lon'])
+            with ThreadPoolExecutor() as executor:
+                future_address = executor.submit(get_address_info_from_coords, session['lat'], session['lon'])
+                future_weather = executor.submit(get_weather_data, session['lat'], session['lon'])
+                future_soil = executor.submit(get_soil_data, session['lat'], session['lon'])
+                executor.submit(fetch_full_soil_data_async, session['lat'], session['lon'], current_user.id)
+                try:
+                    address_info = future_address.result()
+                except Exception as e:
+                    flash(f"Geocoding error: {str(e)}", "danger")
+                    address_info = {'address': 'Unknown', 'city': '', 'region': '', 'country': ''}
+
+                try:
+                    weather_data = future_weather.result()
+                    weather_summary = format_weather_summary(weather_data)
+                except Exception as e:
+                    flash(f"Weather data error: {str(e)}", "danger")
+                    weather_summary = "Weather data unavailable."
+
+                try:
+                    soil_data = future_soil.result()
+                    soil_summary = format_soil_summary(soil_data)
+                except Exception as e:
+                    flash(f"Soil data error: {str(e)}", "danger")
+                    soil_summary = "Soil data unavailable."
+
+            # store in session
             session['full_address'] = address_info['address']
             session['city'] = address_info['city']
             session['region'] = address_info['region']
             session['country'] = address_info['country']
+            session['weather_data']=weather_data
+            session['weather_summary'] = weather_summary
+            session['soil_data']=soil_data
+            session['soil_summary'] = soil_summary
 
     img_file = url_for('static', filename='profile_pics/' + current_user.img) if current_user.is_authenticated else url_for('static', filename='profile_pics/default.jpg')
     if 'conversation_id' in session.keys():
@@ -60,7 +103,20 @@ def chat():
         user_input = request.form["msg"]
         lat = session.get('lat')
         lon = session.get('lon')
-        ai_output = CustomChatBot(user_input, lat, lon)
+        if all([session.get('full_address'), session.get('weather_summary'), session.get('soil_summary')]):
+            prompt_context = prepare_prompt(
+                session['full_address'],
+                session['weather_summary'],
+                session['soil_summary']
+            )
+        else:
+            # Default general prompt
+            prompt_context = (
+                "You are an agriculture expert answering farmers' questions "
+                "such as crop types, weather advice, and best agricultural practices. "
+                "Since I don't know the user's location, do not provide specific weather or soil data."
+            )
+        ai_output = CustomChatBot(user_input, prompt_context)
 
         if current_user.is_authenticated:
             if 'conversation_id' not in session:
@@ -162,6 +218,8 @@ def login():
 
 @app.route("/logout")
 def logout():
+    if current_user.is_authenticated:
+        full_soil_data_store.pop(current_user.id, None)
     logout_user()
     session.pop('lat', None)
     session.pop('lon', None)
@@ -264,82 +322,28 @@ def reset_token(token):
 def download_report():
     if 'lat' in session.keys() and 'lon' in session.keys() and session.get('lat') and session.get('lon'):
 
-        #full_soil_data = get_soil_data(session.get('lat'),session.get('lon'),"full")
-        full_weather_data = get_weather_data(session.get('lat'),session.get('lon'),"full")
+        full_weather_data = session.get('weather_data')
 
-        #layers = full_soil_data["properties"]["layers"]
-        daily_weather_data = full_weather_data['daily']
-        dates = [datetime.fromtimestamp(day['dt']).date().isoformat() for day in daily_weather_data]
-        temps = [day['temp']['day'] for day in daily_weather_data] 
-        humidity = [day['humidity'] for day in daily_weather_data]
-        uvi = [day['uvi'] for day in daily_weather_data]
-        wind_speed = [day['wind_speed'] for day in daily_weather_data]
-        #num_layers = len(layers)
+        soil_data = full_soil_data_store.get(current_user.id)
+        if not soil_data:
+            # fallback to optimized data stored in session
+            soil_data = session.get('soil_data')
+            flash("Full soil data not yet ready, using optimized data instead.", "warning")
+        else:
+            flash("Full soil data used for report!", "success")
 
-        pdf.add_first_page("agrimar/static/AGRIMAR 2.png" , "Rapport de données agricoles")
-        title = "Rapport Météorologique"
-        paragraph = ("Ce rapport contient les données météorologiques quotidiennes, "
-             "y compris les températures, l'humidité, l'indice UV et la vitesse du vent. "
-             "Chaque graphique représente une analyse détaillée des conditions météorologiques "
-             "pour aider à comprendre les tendances et à prendre des décisions éclairées.")
-        pdf.add_second_page(title, paragraph)
+        layers = soil_data['properties']['layers']
 
-        pdf.add_page() #first weather page (temperature + humidity)
-        create_weather_graphs(dates, temps, 'Température quotidienne', 'Temperature (°C)', "agrimar/data_graphs+pdf/daily_temperature.png", 'red')
-        pdf.set_font("Arial", size=12)
-        pdf.image("agrimar/data_graphs+pdf/daily_temperature.png", x=10, y=None , w=190)
-        pdf.set_y(150)   
-        create_weather_graphs(dates, humidity, 'Humidité quotidienne', 'Humidité (%)', "agrimar/data_graphs+pdf/daily_humidity.png", 'blue')
-        pdf.set_font("Arial", size=12)
-        pdf.image('agrimar/data_graphs+pdf/daily_humidity.png', x=10, y=None , w=190)
+        pdf.add_first_page("agrimar/static/AGRIMAR 2.png", PDF.get_first_page_text())
+        pdf.add_second_page("Contenu", PDF.get_second_page_text())
 
-        pdf.add_page() #second weather page (uv index + wind speed)
-        create_weather_graphs(dates, uvi, 'Indice UV quotidien', 'Indice UV', "agrimar/data_graphs+pdf/daily_uvi.png", 'orange')
-        pdf.set_font("Arial", size=12)
-        pdf.image("agrimar/data_graphs+pdf/daily_uvi.png", x=10, y=None , w=190)
-        pdf.set_y(150)   
-        create_weather_graphs(dates, wind_speed, 'Vitesse du vent quotidienne', 'Vitesse (m/s)', "agrimar/data_graphs+pdf/daily_wind_speed.png", 'green')
-        pdf.set_font("Arial", size=12)
-        pdf.image("agrimar/data_graphs+pdf/daily_wind_speed.png", x=10, y=None , w=190)
-
-        title = "Rapport de données du sol"
-        paragraph = ("Ce rapport contient les données du sol pour différentes profondeurs. "
-                 "Chaque graphique représente une propriété du sol en fonction de la profondeur, "
-                 "permettant une analyse détaillée des caractéristiques du sol.")
-        property_descriptions = '''
-        WV1500(Teneur en eau à 1500 kPa) : Indique la capacité du sol à retenir l'eau sous haute tension.
-        WV0033(Teneur en eau à 33 kPa) : Reflète la capacité du sol à retenir l'eau sous tension modérée.
-        WV0010(Teneur en eau à 10 kPa) : Indique la capacité du sol à retenir l'eau sous faible tension.
-        SOC(Carbone organique du sol) : Mesure la quantité de carbone organique dans le sol, un composant essentiel pour la fertilité et la structure du sol.
-        LIMON(Teneur en limon) : Représente la proportion de particules fines dans le sol, influençant la texture du sol et la rétention d'eau.
-        SABLE(Teneur en sable) : Indique la proportion de particules grossières dans le sol, affectant le drainage et l'aération.
-        PHH2O(pH dans H2O) : Mesure l'acidité ou l'alcalinité de l'eau du sol, influençant la disponibilité des nutriments et l'activité microbienne.
-        OCS(Stock de carbone organique) : Représente la quantité totale de carbone stockée dans le sol, crucial pour la santé du sol et la régulation climatique.
-        OCD(Densité de carbone organique) : Reflète la concentration de carbone organique par unité de volume de sol, un indicateur de la fertilité du sol.
-        NITROGEN(Teneur en azote) : Mesure la disponibilité de l'azote dans le sol, essentiel pour la croissance et le développement des plantes.
-        ARGILE(Teneur en argile) : Indique la proportion de particules d'argile dans le sol, affectant la structure du sol et la rétention des nutriments.
-        CFVO(Capacité d'échange cationique) : Reflète la capacité du sol à retenir et à échanger des cations, essentielle pour la disponibilité des nutriments pour les plantes.
-        CEC(Capacité d'échange cationique) : Représente la capacité totale du sol à retenir des cations échangeables, influençant la disponibilité des nutriments.
-        BDOD(Densité apparente du sol) : Mesure la masse de sol par unité de volume, influençant la porosité du sol et la croissance des racines.
-            '''
-        # pdf.add_second_page(title, paragraph , property_descriptions)
-        # for i in range(0, num_layers, 2):  # 2 graphs per page (1x2 grid)
-        #     pdf.add_page()
-        #     for j, layer in enumerate(layers[i:i + 2]):
-        #         file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
-        #         create_soil_graph(layer, file_name)
-        #         pdf.set_font("Arial", size=12)
-        #         pdf.image(file_name, x=10, y=None , w=190)           
-        #         # Adjust the y-coordinate to leave space for the title
-        #         pdf.set_y(150)
-
+        add_weather_properties_pages(pdf,full_weather_data)
+        add_soil_report_pages(pdf, layers)
 
         # Save the PDF
         pdf.output('agrimar/data_graphs+pdf/Rapport_AGRIMAR.pdf')
+        full_soil_data_store.pop(current_user.id, None)  # clear temporary data after use
         return send_file('data_graphs+pdf/Rapport_AGRIMAR.pdf', as_attachment=True)
     else:
         flash(_('Please insert your coordinates first'), 'warning')
         return redirect(url_for("home"))
-
-
-

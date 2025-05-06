@@ -38,13 +38,15 @@ app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 app.config['BABEL_TRANSLATION_DIRECTORIES'] = './translations'
 
 # Database configuration (PostgreSQL)
-host = os.getenv('DB_HOST')
-port = os.getenv('DB_PORT', '5432')  # Default PostgreSQL port
-user = os.getenv('DB_USER')
-password = os.getenv('DB_PASSWORD')
+host = os.getenv('LOCAL_DB_HOST')
+port = os.getenv('LOCAL_DB_PORT')  #5432 is Default PostgreSQL port , 3306 is Default PostgreSQL port
+user = os.getenv('LOCAL_DB_USER')
+password = os.getenv('LOCAL_DB_PASSWORD')
 database = os.getenv('DB_NAME')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{user}:{password}@{host}/{database}"
+# app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{user}:{password}@{host}/{database}"
+app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+mysqlconnector://{user}:{password}@{host}:{port}/{database}"
+
 
 # Importing SQLAlchemy with Matplotlib
 import matplotlib.pyplot as plt
