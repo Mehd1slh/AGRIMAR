@@ -59,7 +59,8 @@ def home():
                 future_address = executor.submit(get_address_info_from_coords, session['lat'], session['lon'])
                 future_weather = executor.submit(get_weather_data, session['lat'], session['lon'])
                 future_soil = executor.submit(get_soil_data, session['lat'], session['lon'])
-                executor.submit(fetch_full_soil_data_async, session['lat'], session['lon'], current_user.id)
+                if current_user.is_authenticated:
+                    executor.submit(fetch_full_soil_data_async, session['lat'], session['lon'], current_user.id)
                 try:
                     address_info = future_address.result()
                 except Exception as e:

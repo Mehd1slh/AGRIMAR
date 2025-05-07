@@ -133,5 +133,8 @@ def add_soil_report_pages(pdf, layers):
         for layer in layers[i:i + 2]:
             file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
             pdf.set_font("Arial", size=12)
-            pdf.image(file_name, x=10, y=None, w=190)
+            if os.path.exists(file_name):
+                pdf.image(file_name, x=10, y=None, w=190)
+            else:
+                print(f"[WARNING] File {file_name} does not exist; skipping image insertion.")
             pdf.set_y(150)
