@@ -1,7 +1,7 @@
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
-from flask import render_template, redirect, url_for, flash, send_file, request, session, json
-from agrimar.chat import CustomChatBot, generate_title , prepare_prompt
+from flask import render_template, redirect, url_for, flash, send_file, request, session, jsonify , json
+from agrimar.chat import CustomChatBot, generate_title, prepare_prompt, transcribe_audio_with_gpt4o
 from agrimar.api_data import get_address_info_from_coords, get_soil_data, get_weather_data ,format_soil_summary , format_weather_summary
 from agrimar.forms import RegistrationForm, LoginForm, MapForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from agrimar.model import User, Conversation, Message, PDF
@@ -9,7 +9,7 @@ from agrimar.report import add_weather_properties_pages ,add_soil_report_pages
 from agrimar import app, db, bcrypt , get_locale , babel
 from flask_login import login_user, logout_user, login_required, current_user
 from PIL import Image
-import secrets, os, smtplib
+import secrets, os, smtplib , uuid
 from flask_babel import Babel, _,lazy_gettext 
 
 pdf = PDF()
@@ -51,6 +51,10 @@ def home():
     session.pop('city', None)
     session.pop('region', None)
     session.pop('country', None)
+    soil_data = {}
+    soil_summary = ""
+    weather_data = {}
+    weather_summary = ""
     if request.method == "POST":
         session['lat'] = request.form.get("latitude")
         session['lon'] = request.form.get("longitude")
@@ -97,6 +101,24 @@ def home():
 
     return render_template('home.html', img_file=img_file, form=MapForm() , current_locale=get_locale())
 
+@app.route("/send_audio", methods=["POST"])
+def send_audio():
+    audio_file = request.files['audio']
+    uploads_dir = os.path.join(app.root_path, 'uploads')
+    os.makedirs(uploads_dir, exist_ok=True)
+
+    filename = f"{uuid.uuid4()}.webm"
+    audio_path = os.path.join(uploads_dir, filename)
+    audio_file.save(audio_path)
+
+    transcribed_text = transcribe_audio_with_gpt4o(audio_path, language="en")
+    os.remove(audio_path)
+
+    if not transcribed_text:
+        return jsonify({'error': 'Sorry, I could not understand the audio.'}), 400
+
+    return jsonify({'transcribed_text': transcribed_text})
+
 
 @app.route("/get", methods=["GET", "POST"])
 def chat():
@@ -115,7 +137,7 @@ def chat():
             prompt_context = (
                 "You are an agriculture expert answering farmers' questions "
                 "such as crop types, weather advice, and best agricultural practices. "
-                "Since I don't know the user's location, do not provide specific weather or soil data."
+                "- If users ask about infos that require their adress or weather data or soil data , ask them to fill their coords in the website map ui."
             )
         ai_output = CustomChatBot(user_input, prompt_context)
 

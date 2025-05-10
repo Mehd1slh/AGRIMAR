@@ -1,71 +1,10 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %}
+
+{% block content %}
 <head>
-  <style>
-    /* CSS styles for the blurred background overlay */
-    #blur-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(5px);
-      z-index: 999;
-    }
-
-    /* CSS styles for the map interface window */
-    #map-window {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      padding: 20px;
-      border: 1px solid #ccc;
-      z-index: 1000;
-      width: 30%; /* Adjust the width as needed */
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-    }
-
-    #map {
-      height: 300px;
-      margin: 0 auto; /* Center the map horizontally */
-    }
-
-    .blur-effect {
-      filter: blur(5px);
-      pointer-events: none;
-    }
-  </style>
   <!-- Include Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Function to load Lottie animation
-    function loadLottieAnimation(containerId, animationPath) {
-      return lottie.loadAnimation({
-        container: document.getElementById(containerId),
-        renderer: "svg",
-        loop: true,
-        autoplay: true,
-        path: animationPath,
-      });
-    }
-
-    // Load multiple Lottie animations
-    var aboutAnimation = loadLottieAnimation("about-animation", "static/Animation-About.json");
-    var otherAnimation = loadLottieAnimation("weather-animation", "static/Animation-Weather.json");
-    var otherAnimation = loadLottieAnimation("soil-animation", "static/Animation-Soil.json");
-    var otherAnimation = loadLottieAnimation("ndvi-animation", "static/Animation-NDVI.json");
-    var otherAnimation = loadLottieAnimation("location-animation", "static/Animation-Location.json");
-    // Add more animations as needed
-    // Add more animations as needed
-  });
-</script>
 
 <body>
   <div id="blur-overlay"></div>
@@ -77,7 +16,7 @@
           <div class="card-header msg_head">
             <div class="d-flex bd-highlight">
               <div class="img_cont">
-                <img src="\static\chatbot icon.png" class="rounded-circle user_img" />
+                <img src="/static/chatbot icon.png" class="rounded-circle user_img" />
                 <span class="online_icon"></span>
               </div>
               <div class="user_info">
@@ -90,15 +29,24 @@
           <div class="card-footer">
             <form id="messageArea" class="input-group">
               <input type="text" id="text" name="msg" placeholder="{{ _('Type your message...') }}" autocomplete="off" class="form-control type_msg" required />
+              <button type="button" id="record-btn" class="input-group-text mic_btn">
+                <i id="mic-icon" class="fas fa-microphone"></i>
+              </button>
+              
+              <audio id="audio-playback" controls style="display: none;"></audio>
+              
               <div class="input-group-append">
-                <button type="submit" id="send" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
+                <button type="submit" id="send" class="input-group-text send_btn">
+                  <i class="fas fa-location-arrow"></i>
+                </button>
               </div>
             </form>
-            <div class="user_info"><p>⚠️ {{ _('Create FREE account to keep conversation history') }}</p></div>
+            <div class="user_info">
+              <p>⚠️ {{ _('Create FREE account to keep conversation history') }}</p>
+            </div>
           </div>
         </div>
       </div>
-      <!-- End Chatbot UI -->
 
       <!-- Location input -->
       <div class="col-md-4 card">
@@ -118,6 +66,7 @@
             <button type="submit" class="btn btn-primary">{{ _('Submit') }}</button>
           </form>
         </div>
+
         <div class="d-flex bd-highlight">
           <div class="user_info mt-3">
             {% if session['lat'] and session['lon'] %}
@@ -135,136 +84,24 @@
           </div>
         </div>
       </div>
-      <!-- Include Leaflet JavaScript -->
-      <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-      <script>
-        document.getElementById("close-map-window").addEventListener("click", function () {
-          document.getElementById("blur-overlay").style.display = "none";
-          document.querySelector(".container").classList.remove("blur-effect");
-          document.getElementById("map-window").style.display = "none";
-        });
-      </script>
-      <script>
-        var map;
-        var marker;
-
-        function initMap() {
-          map = L.map("map").setView([34.007634, -6.838341], 8);
-
-          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          }).addTo(map);
-
-          map.on("click", function (event) {
-            if (marker) {
-              map.removeLayer(marker);
-            }
-            marker = L.marker(event.latlng, {
-              draggable: true,
-            }).addTo(map);
-            document.getElementById("latitude").value = event.latlng.lat;
-            document.getElementById("longitude").value = event.latlng.lng;
-
-            marker.on("dragend", function (event) {
-              var markerLatLng = marker.getLatLng();
-              document.getElementById("latitude").value = markerLatLng.lat;
-              document.getElementById("longitude").value = markerLatLng.lng;
-            });
-          });
-
-          document.getElementById("latitude").addEventListener("input", updateMap);
-          document.getElementById("longitude").addEventListener("input", updateMap);
-        }
-
-        function updateMap() {
-          var latitude = parseFloat(document.getElementById("latitude").value);
-          var longitude = parseFloat(document.getElementById("longitude").value);
-
-          if (!isNaN(latitude) && !isNaN(longitude)) {
-            if (marker) {
-              map.removeLayer(marker);
-            }
-            marker = L.marker([latitude, longitude], {
-              draggable: true,
-            }).addTo(map);
-            map.setView([latitude, longitude], 15);
-            marker.on("dragend", function (event) {
-              var markerLatLng = marker.getLatLng();
-              document.getElementById("latitude").value = markerLatLng.lat;
-              document.getElementById("longitude").value = markerLatLng.lng;
-            });
-          }
-        }
-
-        document.getElementById("location-btn").addEventListener("click", function () {
-          document.getElementById("map-window").style.display = "block";
-          document.getElementById("blur-overlay").style.display = "block";
-          document.querySelector(".container").classList.add("blur-effect");
-          initMap();
-        });
-
-        document.getElementById("location-form").addEventListener("submit", function (event) {
-          event.preventDefault();
-          var latitude = document.getElementById("latitude").value;
-          var longitude = document.getElementById("longitude").value;
-
-          if (latitude && longitude) {
-            document.getElementById("blur-overlay").style.display = "none";
-            document.querySelector(".container").classList.remove("blur-effect");
-            document.getElementById("map-window").style.display = "none";
-            this.submit();
-          } else {
-            console.error("Latitude and longitude are required.");
-          }
-        });
-      </script>
-
-      <script>
-        $(document).ready(function () {
-          $("#messageArea").on("submit", function (event) {
-            event.preventDefault();
-
-            const date = new Date();
-            const str_time = date.getHours() + ":" + date.getMinutes();
-            const rawText = $("#text").val();
-
-            const userHtml = `<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${str_time}</span></div><div class="img_cont_msg"><img src="{{ img_file }}" class="rounded-circle user_img_msg"></div></div>`;
-            $("#text").val("");
-            $("#messageFormeight").append(userHtml);
-
-            $.ajax({
-              data: {
-                msg: rawText,
-              },
-              type: "POST",
-              url: "/get",
-            }).done(function (data) {
-              var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="/static/chatbot icon.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + "</span></div></div>";
-              $("#messageFormeight").append($.parseHTML(botHtml));
-              $("#messageFormeight").css("height", "auto");
-            });
-          });
-        });
-      </script>
-      <!-- End Location-->
     </div>
   </div>
-  <!-- about -->
+
+  <!-- About Section -->
   <div id="about" class="about">
     <div class="container">
       <div class="row">
         <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
-          <div class="about_box" data-aos="fade-right" data-aos-offset="400" data-aos-duration="1000" >
+          <div class="about_box" data-aos="fade-right" data-aos-offset="400" data-aos-duration="1000">
             <h2>{{ _('About AGRIMAR') }}<br /><strong class="black">{{ _('Farm and company') }}</strong></h2>
             <p>
-              {{ _('Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is designed to provide farmers and agriculture enthusiasts with vital information tailored to their specific locations. Whether you need up-to-date weather forecasts, detailed soil data, or other agricultural
-              insights, AgriMar has got you covered. Our service is free, simple to use, and accessible to everyone. Get the information you need to make informed decisions and optimize your farming practices with ease.') }}
+              {{ _('Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is designed to provide farmers and agriculture enthusiasts with vital information tailored to their specific locations. Whether you need up-to-date weather forecasts, detailed soil data, or other agricultural insights, AgriMar has got you covered. Our service is free, simple to use, and accessible to everyone. Get the information you need to make informed decisions and optimize your farming practices with ease.') }}
             </p>
             <a href="#">{{ _('Read More') }}</a>
           </div>
         </div>
         <div class="col-xl-7 col-lg-7 col-md-7 co-sm-l2">
-          <div class="about_img" data-aos="fade-left" data-aos-offset="400" data-aos-duration="1000" >
+          <div class="about_img" data-aos="fade-left" data-aos-offset="400" data-aos-duration="1000">
             <figure><div id="about-animation"></div></figure>
           </div>
         </div>
@@ -272,9 +109,7 @@
     </div>
   </div>
 
-  <!-- end about -->
-
-  <!-- offer -->
+  <!-- Offer Section -->
   <div id="discover" class="offer">
     <div class="container">
       <div class="row">
@@ -312,24 +147,25 @@
 
           <div class="col-md-12">
             <a href="/download" class="read-more">{{ _('Download Report') }}</a>
-            <div class="user_info"><p>⚠️ {{ _('the data based on coords and may take time to generate the report (up to 5mins)') }}</p></div>
+            <div class="user_info">
+              <p>⚠️ {{ _('the data based on coords and may take time to generate the report (up to 5mins)') }}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- end offer -->
 
-  {% endblock content %} {% block footer %}
+{% endblock content %}
 
-  <!--  footer -->
+{% block footer %}
   <footer id="contact_us">
     <div class="footer top_layer">
       <div class="container">
         <div class="row">
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
             <div class="address">
-              <a href="{{url_for('home')}}">
+              <a href="{{ url_for('home') }}">
                 <img src="static/AGRIMAR 2.png" alt="logo" class="footer-logo" />
               </a>
               <p>{{ _('A project by Salih El Mehdi & Akchouch Abdelhakim, powered by Chat GPT-4, Openweather, OpenStreetMap, and SoilGrids. It aims to provide the best agricultural information to users.') }}</p>
@@ -347,7 +183,6 @@
               </ul>
             </div>
           </div>
-
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
             <div class="address">
               <h3>{{ _('Subscribe email') }}</h3>
@@ -356,11 +191,9 @@
               <button class="submit-btn">{{ _('Submit') }}</button>
             </div>
           </div>
-
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
             <div class="address">
               <h3>{{ _('Contact Us') }}</h3>
-
               <ul class="loca">
                 <li>
                   <a href="#"><img src="static/loc1.png" alt="#" /></a>{{ _('Avenue des Nations Unies, Agdal, Rabat Maroc') }}
@@ -384,8 +217,4 @@
       </div>
     </div>
   </footer>
-
-  <!-- end footer -->
-
-  {% endblock footer %}
-</body>
+{% endblock footer %}
