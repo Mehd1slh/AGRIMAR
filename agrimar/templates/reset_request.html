@@ -8,23 +8,28 @@
           <legend class="border-bottom mb-4">{{ _('Reset Password') }}</legend>
 
           <div class="form-group">
-            {{ form.email.label(class="form-control-label") }} {% if form.email.errors %} {{ form.email(class="form-control form-control-lg is-invalid") }}
+            {{ form.email.label(class="form-control-label") }} {% if
+            form.email.errors %} {{ form.email(class="form-control
+            form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.email.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.email(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.email(class="form-control form-control-lg") }} {%
+            endif %}
           </div>
 
-          <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info")}}
+          </div>
         </fieldset>
       </form>
     </div>
   </div>
   <div class="col-md-5">
     <div class="about_img">
-      <figure><div style="height: 300px;" id="forgot-animation"></div></figure>
+      <figure><div style="height: 300px" id="forgot-animation"></div></figure>
     </div>
   </div>
 
@@ -42,7 +47,10 @@
       }
 
       // Load multiple Lottie animations
-      var aboutAnimation = loadLottieAnimation("forgot-animation", "static/Animation-Forgot2.json");
+      var aboutAnimation = loadLottieAnimation(
+        "forgot-animation",
+        "static/Animation-Forgot2.json"
+      );
       // Add more animations as needed
       // Add more animations as needed
     });

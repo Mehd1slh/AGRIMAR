@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const userHtml = `<div class="d-flex justify-content-end mb-4">
             <div class="msg_cotainer_send">${rawText}<span class="msg_time_send">${str_time}</span></div>
-            <div class="img_cont_msg"><img src="{{ img_file }}" class="rounded-circle user_img_msg"></div>
+            <div class="img_cont_msg"><img src="${userProfileImage}" class="rounded-circle user_img_msg"></div>
         </div>`;
 
     $("#text").val("");

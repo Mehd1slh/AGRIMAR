@@ -1,9 +1,10 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <head>
   <!-- Include Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script>
+    const userProfileImage = "{{ img_file }}";
+  </script>
 </head>
 
 <body>
@@ -16,7 +17,10 @@
           <div class="card-header msg_head">
             <div class="d-flex bd-highlight">
               <div class="img_cont">
-                <img src="/static/chatbot icon.png" class="rounded-circle user_img" />
+                <img
+                  src="/static/chatbot icon.png"
+                  class="rounded-circle user_img"
+                />
                 <span class="online_icon"></span>
               </div>
               <div class="user_info">
@@ -28,21 +32,39 @@
           <div id="messageFormeight" class="card-body msg_card_body"></div>
           <div class="card-footer">
             <form id="messageArea" class="input-group">
-              <input type="text" id="text" name="msg" placeholder="{{ _('Type your message...') }}" autocomplete="off" class="form-control type_msg" required />
-              <button type="button" id="record-btn" class="input-group-text mic_btn">
+              <input
+                type="text"
+                id="text"
+                name="msg"
+                placeholder="{{ _('Type your message...') }}"
+                autocomplete="off"
+                class="form-control type_msg"
+                required
+              />
+              <button
+                type="button"
+                id="record-btn"
+                class="input-group-text mic_btn"
+              >
                 <i id="mic-icon" class="fas fa-microphone"></i>
               </button>
-              
-              <audio id="audio-playback" controls style="display: none;"></audio>
-              
+
+              <audio id="audio-playback" controls style="display: none"></audio>
+
               <div class="input-group-append">
-                <button type="submit" id="send" class="input-group-text send_btn">
+                <button
+                  type="submit"
+                  id="send"
+                  class="input-group-text send_btn"
+                >
                   <i class="fas fa-location-arrow"></i>
                 </button>
               </div>
             </form>
             <div class="user_info">
-              <p>⚠️ {{ _('Create FREE account to keep conversation history') }}</p>
+              <p>
+                ⚠️ {{ _('Create FREE account to keep conversation history') }}
+              </p>
             </div>
           </div>
         </div>
@@ -50,20 +72,43 @@
 
       <!-- Location input -->
       <div class="col-md-4 card">
-        <button id="location-btn" class="map-btn">{{ _('Choose Location') }}</button>
+        <button id="location-btn" class="map-btn">
+          {{ _('Choose Location') }}
+        </button>
 
         <!-- Hidden map interface window -->
         <div id="map-window">
-          <button type="button" class="close" aria-label="Close" id="close-map-window">
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            id="close-map-window"
+          >
             <span aria-hidden="true">&times;</span>
           </button>
           <form id="location-form" method="post" action="">
             <div id="map"></div>
-            <label for="latitude" class="form-control-label">{{ _('Latitude') }}</label>
-            <input type="text" id="latitude" name="latitude" class="form-control" />
-            <label for="longitude" class="form-control-label">{{ _('Longitude') }}</label>
-            <input type="text" id="longitude" name="longitude" class="form-control" />
-            <button type="submit" class="btn btn-primary">{{ _('Submit') }}</button>
+            <label for="latitude" class="form-control-label"
+              >{{ _('Latitude') }}</label
+            >
+            <input
+              type="text"
+              id="latitude"
+              name="latitude"
+              class="form-control"
+            />
+            <label for="longitude" class="form-control-label"
+              >{{ _('Longitude') }}</label
+            >
+            <input
+              type="text"
+              id="longitude"
+              name="longitude"
+              class="form-control"
+            />
+            <button type="submit" class="btn btn-primary">
+              {{ _('Submit') }}
+            </button>
           </form>
         </div>
 
@@ -72,14 +117,23 @@
             {% if session['lat'] and session['lon'] %}
             <p><strong>{{ _('Latitude') }}:</strong> {{ session['lat'] }}</p>
             <p><strong>{{ _('Longitude') }}:</strong> {{ session['lon'] }}</p>
-            <p><strong>{{ _('City / Town / Village') }}:</strong> {{ session['city'] }}</p>
-            <p><strong>{{ _('Region / State') }}:</strong> {{ session['region'] }}</p>
+            <p>
+              <strong>{{ _('City / Town / Village') }}:</strong> {{
+              session['city'] }}
+            </p>
+            <p>
+              <strong>{{ _('Region / State') }}:</strong> {{ session['region']
+              }}
+            </p>
             <p><strong>{{ _('Country') }}:</strong> {{ session['country'] }}</p>
             {% else %}
             <div class="about_img">
               <figure><div id="location-animation"></div></figure>
             </div>
-            <p>⚠️ {{ _('Insert location for precised AI response (Soil properties + Weather forecast)') }}</p>
+            <p>
+              ⚠️ {{ _('Insert location for precised AI response (Soil properties
+              + Weather forecast)') }}
+            </p>
             {% endif %}
           </div>
         </div>
@@ -92,16 +146,37 @@
     <div class="container">
       <div class="row">
         <div class="col-xl-5 col-lg-5 col-md-5 co-sm-l2">
-          <div class="about_box" data-aos="fade-right" data-aos-offset="400" data-aos-duration="1000">
-            <h2>{{ _('About AGRIMAR') }}<br /><strong class="black">{{ _('Farm and company') }}</strong></h2>
+          <div
+            class="about_box"
+            data-aos="fade-right"
+            data-aos-offset="400"
+            data-aos-duration="1000"
+          >
+            <h2>
+              {{ _('About AGRIMAR') }}<br /><strong class="black"
+                >{{ _('Farm and company') }}</strong
+              >
+            </h2>
             <p>
-              {{ _('Welcome to AgriMar, your friendly agriculture assistant. Our chatbot is designed to provide farmers and agriculture enthusiasts with vital information tailored to their specific locations. Whether you need up-to-date weather forecasts, detailed soil data, or other agricultural insights, AgriMar has got you covered. Our service is free, simple to use, and accessible to everyone. Get the information you need to make informed decisions and optimize your farming practices with ease.') }}
+              {{ _('Welcome to AgriMar, your friendly agriculture assistant. Our
+              chatbot is designed to provide farmers and agriculture enthusiasts
+              with vital information tailored to their specific locations.
+              Whether you need up-to-date weather forecasts, detailed soil data,
+              or other agricultural insights, AgriMar has got you covered. Our
+              service is free, simple to use, and accessible to everyone. Get
+              the information you need to make informed decisions and optimize
+              your farming practices with ease.') }}
             </p>
             <a href="#">{{ _('Read More') }}</a>
           </div>
         </div>
         <div class="col-xl-7 col-lg-7 col-md-7 co-sm-l2">
-          <div class="about_img" data-aos="fade-left" data-aos-offset="400" data-aos-duration="1000">
+          <div
+            class="about_img"
+            data-aos="fade-left"
+            data-aos-offset="400"
+            data-aos-duration="1000"
+          >
             <figure><div id="about-animation"></div></figure>
           </div>
         </div>
@@ -115,7 +190,11 @@
       <div class="row">
         <div class="col-md-12">
           <div class="title ttl">
-            <h2>{{ _('AGRIMAR') }}<strong class="black"> {{ _('REPORT') }}</strong></h2>
+            <h2>
+              {{ _('AGRIMAR') }}<strong class="black">
+                {{ _('REPORT') }}</strong
+              >
+            </h2>
           </div>
         </div>
       </div>
@@ -126,29 +205,67 @@
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
             <div class="offer_box">
               <h3>{{ _('Weather data') }}</h3>
-              <figure><div id="weather-animation" class="lottie-container" data-aos="zoom-in"></div></figure>
-              <p data-aos="fade-up">{{ _('Detailed global current weather data and weather forecasts. This includes temperature, precipitation, wind speed, humidity, atmospheric pressure, and more.') }}</p>
+              <figure>
+                <div
+                  id="weather-animation"
+                  class="lottie-container"
+                  data-aos="zoom-in"
+                ></div>
+              </figure>
+              <p data-aos="fade-up">
+                {{ _('Detailed global current weather data and weather
+                forecasts. This includes temperature, precipitation, wind speed,
+                humidity, atmospheric pressure, and more.') }}
+              </p>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin_ttt">
             <div class="offer_box">
               <h3>{{ _('Soil data') }}</h3>
-              <figure><div id="soil-animation" class="lottie-container" data-aos="zoom-in"></div></figure>
-              <p data-aos="fade-up">{{ _('Global soil informations provided by ISRIC, contains various soil properties, such as soil organic carbon, pH, soil texture (sand, silt, clay), bulk density, cation exchange capacity, and more.') }}</p>
+              <figure>
+                <div
+                  id="soil-animation"
+                  class="lottie-container"
+                  data-aos="zoom-in"
+                ></div>
+              </figure>
+              <p data-aos="fade-up">
+                {{ _('Global soil informations provided by ISRIC, contains
+                various soil properties, such as soil organic carbon, pH, soil
+                texture (sand, silt, clay), bulk density, cation exchange
+                capacity, and more.') }}
+              </p>
             </div>
           </div>
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk" data-aos="zoom-in">
+          <div
+            class="col-xl-4 col-lg-4 col-md-4 col-sm-12 margin-lkk"
+            data-aos="zoom-in"
+          >
             <div class="offer_box">
               <h3>{{ _('NDVI indicator') }}</h3>
-              <figure><div id="ndvi-animation" class="lottie-container" data-aos="zoom-in"></div></figure>
-              <p data-aos="fade-up">{{ _('The Normalized Difference Vegetation Index (NDVI) measures vegetation health using satellite data.') }}</p>
+              <figure>
+                <div
+                  id="ndvi-animation"
+                  class="lottie-container"
+                  data-aos="zoom-in"
+                ></div>
+              </figure>
+              <p data-aos="fade-up">
+                {{ _('The Normalized Difference Vegetation Index (NDVI) measures
+                vegetation health using satellite data.') }}
+              </p>
             </div>
           </div>
 
           <div class="col-md-12">
-            <a href="/download" class="read-more">{{ _('Download Report') }}</a>
+            <a href="/request_report" class="read-more"
+              >{{ _('Download Report') }}</a
+            >
             <div class="user_info">
-              <p>⚠️ {{ _('the data based on coords and may take time to generate the report (up to 5mins)') }}</p>
+              <p>
+                ⚠️ {{ _('the data based on coords and may take time to generate
+                the report (up to 5mins)') }}
+              </p>
             </div>
           </div>
         </div>
@@ -156,9 +273,7 @@
     </div>
   </div>
 
-{% endblock content %}
-
-{% block footer %}
+  {% endblock content %} {% block footer %}
   <footer id="contact_us">
     <div class="footer top_layer">
       <div class="container">
@@ -166,28 +281,59 @@
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
             <div class="address">
               <a href="{{ url_for('home') }}">
-                <img src="static/AGRIMAR 2.png" alt="logo" class="footer-logo" />
+                <img
+                  src="static/AGRIMAR 2.png"
+                  alt="logo"
+                  class="footer-logo"
+                />
               </a>
-              <p>{{ _('A project by Salih El Mehdi & Akchouch Abdelhakim, powered by Chat GPT-4, Openweather, OpenStreetMap, and SoilGrids. It aims to provide the best agricultural information to users.') }}</p>
+              <p>
+                {{ _('A project by Salih El Mehdi & Akchouch Abdelhakim, powered
+                by Chat GPT-4, Openweather, OpenStreetMap, and SoilGrids. It
+                aims to provide the best agricultural information to users.') }}
+              </p>
             </div>
           </div>
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
             <div class="address">
               <h3>{{ _('Quick links') }}</h3>
               <ul class="Links_footer">
-                <li><img src="static/3.png" /> <a href="{{ url_for('register') }}">{{ _('Join Us') }}</a></li>
-                <li><img src="static/3.png" alt="#" /> <a href="#">{{ _('Maintenance') }}</a></li>
-                <li><img src="static/3.png" alt="#" /> <a href="#">{{ _('Language Packs') }}</a></li>
-                <li><img src="static/3.png" alt="#" /> <a href="#">{{ _('LearnPress') }}</a></li>
-                <li><img src="static/3.png" alt="#" /> <a href="#">{{ _('Release Status') }}</a></li>
+                <li>
+                  <img src="static/3.png" />
+                  <a href="{{ url_for('register') }}">{{ _('Join Us') }}</a>
+                </li>
+                <li>
+                  <img src="static/3.png" alt="#" />
+                  <a href="#">{{ _('Maintenance') }}</a>
+                </li>
+                <li>
+                  <img src="static/3.png" alt="#" />
+                  <a href="#">{{ _('Language Packs') }}</a>
+                </li>
+                <li>
+                  <img src="static/3.png" alt="#" />
+                  <a href="#">{{ _('LearnPress') }}</a>
+                </li>
+                <li>
+                  <img src="static/3.png" alt="#" />
+                  <a href="#">{{ _('Release Status') }}</a>
+                </li>
               </ul>
             </div>
           </div>
           <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
             <div class="address">
               <h3>{{ _('Subscribe email') }}</h3>
-              <p>{{ _('Enter your email below to get the latest updates, join our AGRIMAR community!') }}</p>
-              <input class="form-control" placeholder="{{ _('Your Email') }}" type="type" name="Your Email" />
+              <p>
+                {{ _('Enter your email below to get the latest updates, join our
+                AGRIMAR community!') }}
+              </p>
+              <input
+                class="form-control"
+                placeholder="{{ _('Your Email') }}"
+                type="type"
+                name="Your Email"
+              />
               <button class="submit-btn">{{ _('Submit') }}</button>
             </div>
           </div>
@@ -196,13 +342,16 @@
               <h3>{{ _('Contact Us') }}</h3>
               <ul class="loca">
                 <li>
-                  <a href="#"><img src="static/loc1.png" alt="#" /></a>{{ _('Avenue des Nations Unies, Agdal, Rabat Maroc') }}
+                  <a href="#"><img src="static/loc1.png" alt="#" /></a>{{
+                  _('Avenue des Nations Unies, Agdal, Rabat Maroc') }}
                 </li>
                 <li>
-                  <a href="#"><img src="static/email1.png" alt="#" /></a>fstbm.agrimar@gmail.com
+                  <a href="#"><img src="static/email1.png" alt="#" /></a
+                  >fstbm.agrimar@gmail.com
                 </li>
                 <li>
-                  <a href="#"><img src="static/call1.png" alt="#" /></a>+12586954775
+                  <a href="#"><img src="static/call1.png" alt="#" /></a
+                  >+12586954775
                 </li>
               </ul>
             </div>
@@ -217,4 +366,5 @@
       </div>
     </div>
   </footer>
-{% endblock footer %}
+  {% endblock footer %}
+</body>

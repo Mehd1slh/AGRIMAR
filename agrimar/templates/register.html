@@ -1,63 +1,86 @@
-{% extends "layout.html" %} 
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="row">
   <div class="col-md-7">
     <div class="content-section">
       <form action="" method="POST">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-          <legend class="border-bottom mb-4">{{ _('Join Our Community Today!') }}</legend>
+          <legend class="border-bottom mb-4">
+            {{ _('Join Our Community Today!') }}
+          </legend>
 
           <div class="form-group">
-            {{ form.username.label(class="form-control-label") }} {% if form.username.errors %} {{ form.username(class="form-control form-control-lg is-invalid") }}
+            {{ form.username.label(class="form-control-label") }} {% if
+            form.username.errors %} {{ form.username(class="form-control
+            form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.username.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.username(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.username(class="form-control form-control-lg") }}
+            {% endif %}
           </div>
 
           <div class="form-group">
-            {{ form.email.label(class="form-control-label") }} {% if form.email.errors %} {{ form.email(class="form-control form-control-lg is-invalid") }}
+            {{ form.email.label(class="form-control-label") }} {% if
+            form.email.errors %} {{ form.email(class="form-control
+            form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.email.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.email(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.email(class="form-control form-control-lg") }} {%
+            endif %}
           </div>
 
           <div class="form-group">
-            {{ form.mdp.label(class="form-control-label") }} {% if form.mdp.errors %} {{ form.mdp(class="form-control form-control-lg is-invalid") }}
+            {{ form.mdp.label(class="form-control-label") }} {% if
+            form.mdp.errors %} {{ form.mdp(class="form-control form-control-lg
+            is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.mdp.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.mdp(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.mdp(class="form-control form-control-lg") }} {%
+            endif %}
           </div>
 
           <div class="form-group">
-            {{ form.con_mdp.label(class="form-control-label") }} {% if form.con_mdp.errors %} {{ form.con_mdp(class="form-control form-control-lg is-invalid") }}
+            {{ form.con_mdp.label(class="form-control-label") }} {% if
+            form.con_mdp.errors %} {{ form.con_mdp(class="form-control
+            form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.con_mdp.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.con_mdp(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.con_mdp(class="form-control form-control-lg") }}
+            {% endif %}
           </div>
 
-          <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info")}}
+          </div>
         </fieldset>
       </form>
     </div>
     <div class="border-top pt-3">
-      <small class="text-light font-weight-bold"> {{ _('Already Have An Account?') }} <a class="ml-2" href="{{ url_for('login') }}" style="color: rgb(33, 168, 28)">{{ _('Log In') }}</a> </small>
+      <small class="text-light font-weight-bold">
+        {{ _('Already Have An Account?') }}
+        <a
+          class="ml-2"
+          href="{{ url_for('login') }}"
+          style="color: rgb(33, 168, 28)"
+          >{{ _('Log In') }}</a
+        >
+      </small>
     </div>
   </div>
   <div class="col-md-5 d-flex justify-content-center">
-    <div class="about_img ">
+    <div class="about_img">
       <figure><div id="login-animation"></div></figure>
     </div>
   </div>
@@ -75,7 +98,10 @@
         path: animationPath,
       });
     }
-    var aboutAnimation = loadLottieAnimation("login-animation", "static/Animation-Login.json");
+    var aboutAnimation = loadLottieAnimation(
+      "login-animation",
+      "static/Animation-Login.json"
+    );
   });
 </script>
 {% endblock content %}

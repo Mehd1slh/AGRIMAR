@@ -8,25 +8,33 @@
           <legend class="border-bottom mb-4">{{ _('Reset Password') }}</legend>
 
           <div class="form-group">
-            {{ form.mdp.label(class="form-control-label") }} {% if form.mdp.errors %} {{ form.mdp(class="form-control form-control-lg is-invalid") }}
+            {{ form.mdp.label(class="form-control-label") }} {% if
+            form.mdp.errors %} {{ form.mdp(class="form-control form-control-lg
+            is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.mdp.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.mdp(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.mdp(class="form-control form-control-lg") }} {%
+            endif %}
           </div>
 
           <div class="form-group">
-            {{ form.con_mdp.label(class="form-control-label") }} {% if form.con_mdp.errors %} {{ form.con_mdp(class="form-control form-control-lg is-invalid") }}
+            {{ form.con_mdp.label(class="form-control-label") }} {% if
+            form.con_mdp.errors %} {{ form.con_mdp(class="form-control
+            form-control-lg is-invalid") }}
             <div class="invalid-feedback">
               {% for error in form.con_mdp.errors %}
               <span>{{ error }}</span>
               {% endfor %}
             </div>
-            {% else %} {{ form.con_mdp(class="form-control form-control-lg") }} {% endif %}
+            {% else %} {{ form.con_mdp(class="form-control form-control-lg") }}
+            {% endif %}
           </div>
-          <div class="form-group">{{ form.submit(class="btn btn-outline-info")}}</div>
+          <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info")}}
+          </div>
         </fieldset>
       </form>
     </div>
@@ -51,7 +59,10 @@
       }
 
       // Load multiple Lottie animations
-      var aboutAnimation = loadLottieAnimation("forgot-animation", "/static/Animation-Forgot2.json");
+      var aboutAnimation = loadLottieAnimation(
+        "forgot-animation",
+        "/static/Animation-Forgot2.json"
+      );
       // Add more animations as needed
       // Add more animations as needed
     });

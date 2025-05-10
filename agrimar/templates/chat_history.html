@@ -9,11 +9,16 @@
             <div class="chat-history w-100">
               <h2 class="text-center">{{ _('Chat History') }}</h2>
               {% if cnvs|length == 0 %}
-              <p class="text-center text-secondary font-weight-bold">{{ _('You have no recent conversations') }}</p>
+              <p class="text-center text-secondary font-weight-bold">
+                {{ _('You have no recent conversations') }}
+              </p>
               {% else %}
               <ul id="chatList" class="list-group">
                 {% for c in cnvs %}
-                <li class="list-group-item list-group-item-action conversations" data-cnvid="{{ c.id }}">
+                <li
+                  class="list-group-item list-group-item-action conversations"
+                  data-cnvid="{{ c.id }}"
+                >
                   <strong>{{ c.title }}</strong><br />
                   <small>{{ c.date }}</small>
                 </li>
@@ -64,7 +69,11 @@
         if (message.role === "user") {
           messageDiv.classList.add("d-flex", "justify-content-end", "mb-4");
           messageDiv.innerHTML = `
-                <div class="msg_cotainer_send">${message.content}<span class="msg_time_send">${formatDateTime(message.time)}</span></div>
+                <div class="msg_cotainer_send">${
+                  message.content
+                }<span class="msg_time_send">${formatDateTime(
+            message.time
+          )}</span></div>
                 <div class="img_cont_msg">
                   <img src="/static/profile_pics/{{current_user.img}}" class="rounded-circle user_img_msg">
                 </div>`;
@@ -74,7 +83,11 @@
                 <div class="img_cont_msg">
                   <img src="/static/chatbot icon.png" class="rounded-circle user_img_msg">
                 </div>
-                <div class="msg_cotainer">${message.content}<span class="msg_time">${formatDateTime(message.time)}</span></div>`;
+                <div class="msg_cotainer">${
+                  message.content
+                }<span class="msg_time">${formatDateTime(
+            message.time
+          )}</span></div>`;
         }
         messageFormeight.appendChild(messageDiv);
         $("#messageFormeight").css("height", "auto");

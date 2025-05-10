@@ -2,6 +2,13 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+from dotenv import load_dotenv
+
+load_dotenv('variables.env')
 
 def create_soil_graph(layer, file_name):
     print(f"Creating graph for layer: {layer.get('name')}")
@@ -138,3 +145,21 @@ def add_soil_report_pages(pdf, layers):
             else:
                 print(f"[WARNING] File {file_name} does not exist; skipping image insertion.")
             pdf.set_y(150)
+
+
+def send_report_email(recipient_email, report_path):
+    msg = MIMEMultipart()
+    msg['From'] = os.getenv('MAIL_ADRESSE')
+    msg['To'] = recipient_email
+    msg['Subject'] = 'Your AGRIMAR Report'
+
+    part = MIMEBase('application', "octet-stream")
+    with open(report_path, 'rb') as file:
+        part.set_payload(file.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', f'attachment; filename={os.path.basename(report_path)}')
+    msg.attach(part)
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+        server.login(os.getenv('MAIL_ADRESSE'), os.getenv('MAIL_PASSWORD'))
+        server.sendmail(msg['From'], [msg['To']], msg.as_string())

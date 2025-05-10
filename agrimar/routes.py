@@ -5,14 +5,18 @@ from agrimar.chat import CustomChatBot, generate_title, prepare_prompt, transcri
 from agrimar.api_data import get_address_info_from_coords, get_soil_data, get_weather_data ,format_soil_summary , format_weather_summary
 from agrimar.forms import RegistrationForm, LoginForm, MapForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from agrimar.model import User, Conversation, Message, PDF
-from agrimar.report import add_weather_properties_pages ,add_soil_report_pages
+from agrimar.report import add_weather_properties_pages ,add_soil_report_pages , send_report_email
 from agrimar import app, db, bcrypt , get_locale , babel
 from flask_login import login_user, logout_user, login_required, current_user
 from PIL import Image
 import secrets, os, smtplib , uuid
 from flask_babel import Babel, _,lazy_gettext 
+from dotenv import load_dotenv
+
 
 pdf = PDF()
+executor = ThreadPoolExecutor()
+load_dotenv('variables.env')
 
 # ✅ global temporary store
 full_soil_data_store = {}
@@ -289,7 +293,7 @@ def account():
     return render_template('account.html', title=_('Account'), img_file=img_file, form=form, current_locale=session.get('lang'))
 
 def send_reset_email(user):
-    email_sender = 'fstbm.agrimar@gmail.com'
+    email_sender = app.config['MAIL_ADRESSE']
     email_password = app.config['MAIL_PASSWORD']
     email_reciever = user.email
     email_server = 'smtp.gmail.com'
@@ -369,4 +373,85 @@ def download_report():
         return send_file('data_graphs+pdf/Rapport_AGRIMAR.pdf', as_attachment=True)
     else:
         flash(_('Please insert your coordinates first'), 'warning')
+        return redirect(url_for("home"))
+    
+def generate_and_email_report(user_id, recipient_email, lat, lon):
+    try:
+        print(f"[INFO] Starting report generation for user {user_id}...")
+
+        report_path = f'agrimar/data_graphs+pdf/Rapport_AGRIMAR_{user_id}.pdf'
+        pdf.add_first_page("agrimar/static/AGRIMAR 2.png", "Rapport AGRIMAR")
+        pdf.add_second_page(
+            "Contenu",
+            "Ce rapport présente les résultats météorologiques et pédologiques collectés à partir des coordonnées fournies. Il inclut des graphiques, des analyses et des sections récapitulatives.",
+            ""
+        )
+
+
+        # WEATHER SECTION
+        try:
+            full_weather_data = get_weather_data(lat, lon)
+            if full_weather_data and 'daily' in full_weather_data:
+                print(f"[INFO] Weather data fetched.")
+                add_weather_properties_pages(pdf, full_weather_data)
+            else:
+                raise Exception("Weather data is empty or malformed.")
+        except Exception as weather_error:
+            print(f"[WARNING] Weather data fetch failed: {weather_error}")
+            pdf.add_page()
+            pdf.set_font("Arial", style='B', size=16)
+            pdf.multi_cell(0, 10, "ATTENTION Données Météorologiques Indisponibles")
+            pdf.set_font("Arial", size=12)
+            pdf.multi_cell(0, 10, "Les données météorologiques ne sont actuellement pas disponibles. Veuillez réessayer plus tard pour obtenir un rapport complet.")
+
+        # SOIL SECTION
+        soil_data = full_soil_data_store.get(user_id)
+        if not soil_data:
+            print(f"[WARNING] Full soil data not ready, fetching fallback soil data...")
+            try:
+                soil_data = get_soil_data(lat, lon)
+                if not soil_data or 'properties' not in soil_data or not soil_data['properties'].get('layers'):
+                    print("[ERROR] Soil data fetch returned empty or incomplete data.")
+                    soil_data = None
+            except Exception as soil_error:
+                print(f"[ERROR] Soil data fetch failed with exception: {soil_error}")
+                soil_data = None
+
+        if soil_data and 'properties' in soil_data and soil_data['properties'].get('layers'):
+            layers = soil_data['properties']['layers']
+            add_soil_report_pages(pdf, layers)
+        else:
+            pdf.add_page()
+            pdf.set_font("Arial", style='B', size=16)
+            pdf.multi_cell(0, 10, "ATTENTION: Données du Sol Indisponibles")
+            pdf.set_font("Arial", size=12)
+            pdf.multi_cell(0, 10, "Les données du sol ne sont actuellement pas disponibles. Veuillez réessayer plus tard pour obtenir un rapport complet.")
+
+        # SAVE & EMAIL
+        pdf.output(report_path)
+        print(f"[INFO] PDF report saved at {report_path}.")
+
+        send_report_email(recipient_email, report_path)
+        print(f"[INFO] Report email sent to {recipient_email}.")
+
+    except Exception as e:
+        print(f"[ERROR] Failed to generate/send report for user {user_id}: {e}")
+
+
+
+@app.route("/request_report")
+@login_required
+def request_report():
+    if 'lat' in session and 'lon' in session and session.get('lat') and session.get('lon'):
+        recipient_email = current_user.email
+        user_id = current_user.id
+        lat = session.get('lat')
+        lon = session.get('lon')
+
+        executor.submit(generate_and_email_report, user_id, recipient_email, lat, lon)
+
+        flash('✅ Your report is being prepared and will be sent to your email shortly.', 'success')
+        return redirect(url_for("home"))
+    else:
+        flash('ATTENTION Please insert your coordinates first', 'warning')
         return redirect(url_for("home"))
