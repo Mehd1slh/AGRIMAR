@@ -59,6 +59,7 @@ login_manager.login_message_category = 'info'
 
 # Use mail password from .env
 app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_ADRESSE'] = os.getenv('MAIL_ADRESSE')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 
 from agrimar import routes

@@ -1,10 +1,5 @@
 __pycache__/
-script.sh
-basic_interface_chat
-ChatBot-main
-files
-flagged
-Agrimar.rar
+agrima/uploads
 agrimar/static/profile_pics
 agrimar/data_graphs+pdf/
 variables.env

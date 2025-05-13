@@ -1,6 +1,6 @@
 from sqlalchemy.orm import relationship
 from dataclasses import dataclass
-from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from datetime import datetime, timezone , timedelta
 from agrimar import db , login_manager ,app
 from flask_login import UserMixin

@@ -115,7 +115,7 @@ def send_audio():
     audio_path = os.path.join(uploads_dir, filename)
     audio_file.save(audio_path)
 
-    transcribed_text = transcribe_audio_with_gpt4o(audio_path, language="en")
+    transcribed_text = transcribe_audio_with_gpt4o(audio_path)
     os.remove(audio_path)
 
     if not transcribed_text:
@@ -409,7 +409,7 @@ def generate_and_email_report(user_id, recipient_email, lat, lon):
         if not soil_data:
             print(f"[WARNING] Full soil data not ready, fetching fallback soil data...")
             try:
-                soil_data = get_soil_data(lat, lon)
+                soil_data = get_soil_data(lat, lon,"full")
                 if not soil_data or 'properties' not in soil_data or not soil_data['properties'].get('layers'):
                     print("[ERROR] Soil data fetch returned empty or incomplete data.")
                     soil_data = None

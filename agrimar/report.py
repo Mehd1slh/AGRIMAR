@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from datetime import datetime
-from concurrent.futures import ThreadPoolExecutor
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -12,24 +11,25 @@ load_dotenv('variables.env')
 
 def create_soil_graph(layer, file_name):
     print(f"Creating graph for layer: {layer.get('name')}")
-    
+
     # Renaming BEFORE filename creation
     name_mapping = {'sand': 'sable', 'clay': 'argile', 'silt': 'limon'}
     layer_name = name_mapping.get(layer['name'], layer['name'])
-    
+
     file_name = f"agrimar/data_graphs+pdf/{layer_name}.png"
     os.makedirs(os.path.dirname(file_name), exist_ok=True)  # ensure directory exists
 
     depths = [d.get('label') for d in layer.get('depths', [])]
-    values = [d.get('values', {}).get('mean') for d in layer.get('depths', [])]
+    d_factor = layer.get('unit_measure', {}).get('d_factor', 1)
+    values = [ (d.get('values', {}).get('mean') / d_factor) if d.get('values', {}).get('mean') is not None else None
+               for d in layer.get('depths', []) ]
 
     print(f"Depths: {depths}")
     print(f"Values: {values}")
 
-    # ⚠️ Defensive: if data missing, skip file creation
     if not depths or not values or any(v is None for v in values):
         print(f"[WARNING] Missing or invalid data for layer {layer_name}. Graph will not be created.")
-        return  # early exit!
+        return
 
     plt.figure(figsize=(10, 6))
     plt.plot(depths, values, marker='o', linestyle='-', color='b')
@@ -37,19 +37,22 @@ def create_soil_graph(layer, file_name):
     plt.xlabel('Profondeur')
     plt.ylabel(f"{layer.get('unit_measure', {}).get('target_units', '')}")
     plt.grid(True)
+    plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.1f}'))
     plt.savefig(file_name)
     plt.close()
     print(f"[INFO] Graph saved at {file_name}")
 
-
 def create_weather_graphs(dates, values, title, ylabel, filename , color = 'b'):
     plt.figure(figsize=(10, 6))
     plt.plot(dates, values, marker='o', color=color)
+    for x, y in zip(dates, values):
+        plt.text(x, y - 1, f'{y:.1f}', ha='center', va='top', fontsize=8)
     plt.title(title)
     plt.xlabel('Date')
     plt.ylabel(ylabel)
     plt.grid(True)
     plt.xticks(rotation=45)
+    plt.ylim(bottom=0)
     plt.tight_layout()
     plt.savefig(filename)
     plt.close()
@@ -125,20 +128,20 @@ def add_soil_report_pages(pdf, layers):
 
     num_layers = len(layers)
 
-    # Generate all graphs in parallel
-    with ThreadPoolExecutor() as executor:
-        futures = []
-        for layer in layers:
-            file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
-            futures.append(executor.submit(create_soil_graph, layer, file_name))
-        for f in futures:
-            f.result()  # wait for all to finish
+    # Generate all graphs sequentially
+    for layer in layers:
+        file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
+        create_soil_graph(layer, file_name)
+
 
     # Now insert into PDF (still sequential)
     for i in range(0, num_layers, 2):
         pdf.add_page()
         for layer in layers[i:i + 2]:
-            file_name = f"agrimar/data_graphs+pdf/{layer['name']}.png"
+            name_mapping = {'sand': 'sable', 'clay': 'argile', 'silt': 'limon'}
+            layer_name = name_mapping.get(layer['name'], layer['name'])
+            file_name = f"agrimar/data_graphs+pdf/{layer_name}.png"
+
             pdf.set_font("Arial", size=12)
             if os.path.exists(file_name):
                 pdf.image(file_name, x=10, y=None, w=190)
